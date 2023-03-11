@@ -36,7 +36,7 @@ const Sidebar =()=>{
                                 </a>
                             </li>
                             <li className="pt-3">
-                                <a href="/dashboard/advert-manager" className="d-flex align-items-center">
+                                <a href="/advert-manager" className="d-flex align-items-center">
                                     <span>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_1_12273)">
@@ -63,7 +63,7 @@ const Sidebar =()=>{
                                 </a>
                             </li>
                             <li className="pt-3">
-                                <a href="#" className="d-flex align-items-center">
+                                <a href="/user-manager/customers" className="d-flex align-items-center">
                                     <span>
                                         <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0253 4.57794C11.0253 2.46383 12.7705 0.75 14.9233 0.75C17.0762 0.75 18.8214 2.46383 18.8214 4.57794C18.8214 6.69205 17.0762 8.40588 14.9233 8.40588C12.7705 8.40588 11.0253 6.69205 11.0253 4.57794Z" fill="#595959" />
@@ -72,7 +72,20 @@ const Sidebar =()=>{
                                             <path d="M5.99998 10.263C3.20192 10.263 0.837303 12.1491 0.0692647 14.739C-0.224564 15.7298 0.4514 16.668 1.4363 16.8544C2.48573 17.053 4.02438 17.25 5.99998 17.25C6.08998 17.25 6.17907 17.2496 6.26724 17.2488C5.65035 16.7273 5.33573 15.8872 5.58658 15.0156C6.0822 13.2933 7.10972 11.8127 8.46908 10.7832C7.71262 10.4486 6.87762 10.263 5.99998 10.263Z" fill="#595959" />
                                         </svg>
                                     </span>
-                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">User</h3>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">User Manager -- Customers</h3>
+                                </a>
+                            </li>
+                            <li className="pt-3">
+                                <a href="/user-manager/administrators" className="d-flex align-items-center">
+                                    <span>
+                                        <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0253 4.57794C11.0253 2.46383 12.7705 0.75 14.9233 0.75C17.0762 0.75 18.8214 2.46383 18.8214 4.57794C18.8214 6.69205 17.0762 8.40588 14.9233 8.40588C12.7705 8.40588 11.0253 6.69205 11.0253 4.57794Z" fill="#595959" />
+                                            <path d="M8.07992 14.6711C8.96614 11.7843 11.6946 9.68186 14.9232 9.68186C18.1519 9.68186 20.8804 11.7843 21.7666 14.6713C22.1056 15.7757 21.3256 16.8215 20.1891 17.0292C18.9781 17.2506 17.2028 17.47 14.9232 17.47C12.6436 17.47 10.8682 17.2505 9.65731 17.0291C8.52086 16.8213 7.74088 15.7755 8.07992 14.6711Z" fill="#595959" />
+                                            <path d="M6.00007 2.25C4.13431 2.25 2.62182 3.78752 2.62182 5.68415C2.62182 7.58079 4.13431 9.11831 6.00007 9.11831C7.86582 9.11831 9.37831 7.58079 9.37831 5.68415C9.37831 3.78752 7.86582 2.25 6.00007 2.25Z" fill="#595959" />
+                                            <path d="M5.99998 10.263C3.20192 10.263 0.837303 12.1491 0.0692647 14.739C-0.224564 15.7298 0.4514 16.668 1.4363 16.8544C2.48573 17.053 4.02438 17.25 5.99998 17.25C6.08998 17.25 6.17907 17.2496 6.26724 17.2488C5.65035 16.7273 5.33573 15.8872 5.58658 15.0156C6.0822 13.2933 7.10972 11.8127 8.46908 10.7832C7.71262 10.4486 6.87762 10.263 5.99998 10.263Z" fill="#595959" />
+                                        </svg>
+                                    </span>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">User Manager -- Administrators</h3>
                                 </a>
                             </li>
                             <li className="pt-3">
