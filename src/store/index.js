@@ -5,6 +5,7 @@ import signUpsReducer from './signUps/signUpsSlice'
 import advertsReducer from './adverts/advertsSlice'
 import administratorsSlice  from './user-manager/administrators/administratorsSlice'
 import customersSlice from './user-manager/customers/customersSlice'
+import loginSlice from './login/loginSlice'
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -12,6 +13,7 @@ export const store = configureStore({
     signUps:signUpsReducer,
     adverts:advertsReducer,
     administrators:administratorsSlice,
-    customers:customersSlice
+    customers:customersSlice,
+    login:loginSlice
   },
 })

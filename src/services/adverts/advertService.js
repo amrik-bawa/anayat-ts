@@ -5,8 +5,11 @@ import { getRequest } from '../axios';
 class advertService {
 
     getLiveList = async (urlParam={},payload) =>{
-       return await getRequest('dashboard/live/adverts?records_per_page=10',urlParam);
-        }
+        return await getRequest('dashboard/live/adverts?records_per_page=10',urlParam);
+         }
+    getLocations = async (urlParam={},payload) =>{
+    return await getRequest('dashboard/advert/locations?dfsd=ss',urlParam);
+        }     
 
 }
 

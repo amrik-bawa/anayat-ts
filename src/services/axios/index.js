@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create();
+const access_token=localStorage.getItem('token')
 
 axiosClient.defaults.baseURL = 'https://transbunnies.com/dev/wp-json/';
 
@@ -16,10 +17,18 @@ axiosClient.defaults.withCredentials = true;
 
 
 export function getRequest(URL,urlParam) {
-  return axiosClient.get(`/${URL}`,{params:urlParam})
+  return axiosClient.get(`/${URL}`,
+  {
+    params:urlParam,
+    headers: {
+      'Authorization': `Bearer ${access_token}`
+    }
+  }
+  )
 }
 
 export function postRequest(URL, payload) {
+  console.log(URL)
   return axiosClient.post(`/${URL}`, payload).then(response => response);
 }
 
