@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation,NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Sidebar =()=>{
     const location = useLocation();
@@ -14,11 +14,11 @@ const Sidebar =()=>{
             
             if(element.parentElement.getAttribute('href')==location.pathname){
                 element.classList.add('text-grey');
-                element.classList.remove('text-reddd');
+                element.classList.remove('text-red');
                 console.log('yes ',element.parentElement.getAttribute('href'),location.pathname)
             }else{
                 element.classList.remove('text-grey');
-                element.classList.add('text-reddd');
+                element.classList.add('text-red');
                 console.log('no ',element.parentElement.getAttribute('href'),location.pathname)
             }
           
@@ -31,29 +31,28 @@ const Sidebar =()=>{
         <div className="sidebar">
                         <ul className="list-unstyled px-3 pt-2">
                             <li className="py-1">
-                                <NavLink to="/dashboard" className='d-flex align-items-center'>
-                                <span>
+                                <a href="/dashboard" className="d-flex align-items-center">
+                                    <span>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M3 11C3 12.1046 3.89543 13 5 13H9C10.1046 13 11 12.1046 11 11V5C11 3.89543 10.1046 3 9 3H5C3.89543 3 3 3.89543 3 5V11ZM3 19C3 20.1046 3.89543 21 5 21H9C10.1046 21 11 20.1046 11 19V17C11 15.8954 10.1046 15 9 15H5C3.89543 15 3 15.8954 3 17V19ZM13 19C13 20.1046 13.8954 21 15 21H19C20.1046 21 21 20.1046 21 19V13C21 11.8954 20.1046 11 19 11H15C13.8954 11 13 11.8954 13 13V19ZM15 3C13.8954 3 13 3.89543 13 5V7C13 8.10457 13.8954 9 15 9H19C20.1046 9 21 8.10457 21 7V5C21 3.89543 20.1046 3 19 3H15Z" fill="#595959" />
                                         </svg>
                                     </span>
                                     <h3 className=" mb-0 fs-6 ps-2 fw-normal">Dashboard</h3>
-                                </NavLink>
+                                </a>
                             </li>
-
                             <li className="pt-2">
-                                <NavLink to="/ts-fans" className="d-flex align-items-center">
+                                <a href="/dashboard/advert-manager" className="d-flex align-items-center">
                                     <span>
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M19.0749 7.52501L12.4749 0.925012C12.1749 0.625012 11.7249 0.625012 11.4249 0.925012L9.0249 3.32501C8.6499 3.70001 8.7999 4.15001 9.0249 4.37501L9.5499 4.90001L7.2999 7.15001C6.1749 6.92501 3.0999 6.40001 1.4499 8.05001C1.1499 8.35001 1.1499 8.80001 1.4499 9.10001L5.7249 13.375L0.999902 18.1C0.699902 18.4 0.699902 18.85 0.999902 19.15C1.2999 19.45 1.8249 19.375 2.0499 19.15L6.7749 14.425L11.0499 18.7C11.4999 19.075 11.9499 18.925 12.0999 18.7C13.7499 17.05 13.2249 13.975 12.9999 12.85L15.2499 10.6L15.7749 11.125C16.0749 11.425 16.5249 11.425 16.8249 11.125L19.2249 8.72501C19.3749 8.27501 19.3749 7.82501 19.0749 7.52501Z" fill="#595959" />
                                         </svg>
 
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">TS Fans</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">TS Fans</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="/orders" className="d-flex align-items-center">
+                                <a href="#" className="d-flex align-items-center">
                                     <span>
                                         <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 20C1.11929 20 0 18.8807 0 17.5V2.5C0 1.11929 1.11929 0 2.5 0H15.5C16.8807 0 18 1.11929 18 2.5V17.5C18 18.8807 16.8807 20 15.5 20H2.5ZM4.5 3C3.67157 3 3 3.67157 3 4.5V7.5C3 8.32843 3.67157 9 4.5 9H13.5C14.3284 9 15 8.32843 15 7.5V4.5C15 3.67157 14.3284 3 13.5 3H4.5ZM3 12C3 11.4477 3.44772 11 4 11H14C14.5523 11 15 11.4477 15 12C15 12.5523 14.5523 13 14 13H4C3.44771 13 3 12.5523 3 12ZM4 15C3.44772 15 3 15.4477 3 16C3 16.5523 3.44771 17 4 17H10C10.5523 17 11 16.5523 11 16C11 15.4477 10.5523 15 10 15H4Z" fill="#595959" />
@@ -61,11 +60,11 @@ const Sidebar =()=>{
 
 
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">Orders</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Orders</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="/advert-manager" className="d-flex align-items-center">
+                                <a href="/advert-manager" className="d-flex align-items-center">
                                     <span>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_1_12273)">
@@ -88,11 +87,11 @@ const Sidebar =()=>{
                                             </defs>
                                         </svg>
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">Advert Manager</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Advert Manager</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="/user-manager/customers" className="d-flex align-items-center">
+                                <a href="/user-manager/customers" className="d-flex align-items-center">
                                     <span>
                                         <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0253 4.57794C11.0253 2.46383 12.7705 0.75 14.9233 0.75C17.0762 0.75 18.8214 2.46383 18.8214 4.57794C18.8214 6.69205 17.0762 8.40588 14.9233 8.40588C12.7705 8.40588 11.0253 6.69205 11.0253 4.57794Z" fill="#595959" />
@@ -101,11 +100,11 @@ const Sidebar =()=>{
                                             <path d="M5.99998 10.263C3.20192 10.263 0.837303 12.1491 0.0692647 14.739C-0.224564 15.7298 0.4514 16.668 1.4363 16.8544C2.48573 17.053 4.02438 17.25 5.99998 17.25C6.08998 17.25 6.17907 17.2496 6.26724 17.2488C5.65035 16.7273 5.33573 15.8872 5.58658 15.0156C6.0822 13.2933 7.10972 11.8127 8.46908 10.7832C7.71262 10.4486 6.87762 10.263 5.99998 10.263Z" fill="#595959" />
                                         </svg>
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">User Manager -- Customers</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">User Manager -- Customers</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="/user-manager/administrators" className="d-flex align-items-center">
+                                <a href="/user-manager/administrators" className="d-flex align-items-center">
                                     <span>
                                         <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0253 4.57794C11.0253 2.46383 12.7705 0.75 14.9233 0.75C17.0762 0.75 18.8214 2.46383 18.8214 4.57794C18.8214 6.69205 17.0762 8.40588 14.9233 8.40588C12.7705 8.40588 11.0253 6.69205 11.0253 4.57794Z" fill="#595959" />
@@ -114,22 +113,22 @@ const Sidebar =()=>{
                                             <path d="M5.99998 10.263C3.20192 10.263 0.837303 12.1491 0.0692647 14.739C-0.224564 15.7298 0.4514 16.668 1.4363 16.8544C2.48573 17.053 4.02438 17.25 5.99998 17.25C6.08998 17.25 6.17907 17.2496 6.26724 17.2488C5.65035 16.7273 5.33573 15.8872 5.58658 15.0156C6.0822 13.2933 7.10972 11.8127 8.46908 10.7832C7.71262 10.4486 6.87762 10.263 5.99998 10.263Z" fill="#595959" />
                                         </svg>
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">User Manager -- Administrators</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">User Manager -- Administrators</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="media-manager" className="d-flex align-items-center">
+                                <a href="#" className="d-flex align-items-center">
                                     <span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M15.6 13.2V4.80001C15.6 4.14001 15.06 3.60001 14.4 3.60001H12.396L10.8 1.20001H5.99995L4.40395 3.60001H2.39995C1.73995 3.60001 1.19995 4.14001 1.19995 4.80001V13.2C1.19995 13.86 1.73995 14.4 2.39995 14.4H14.4C15.06 14.4 15.6 13.86 15.6 13.2ZM8.39995 5.40001C9.1956 5.40001 9.95866 5.71608 10.5213 6.27869C11.0839 6.8413 11.4 7.60436 11.4 8.40001C11.4 9.19566 11.0839 9.95872 10.5213 10.5213C9.95866 11.0839 9.1956 11.4 8.39995 11.4C7.6043 11.4 6.84124 11.0839 6.27863 10.5213C5.71602 9.95872 5.39995 9.19566 5.39995 8.40001C5.39995 7.60436 5.71602 6.8413 6.27863 6.27869C6.84124 5.71608 7.6043 5.40001 8.39995 5.40001V5.40001ZM16.8 7.20001H22.7999V19.8C22.7999 20.5957 22.4839 21.3587 21.9213 21.9213C21.3587 22.4839 20.5956 22.8 19.8 22.8C19.0043 22.8 18.2412 22.4839 17.6786 21.9213C17.116 21.3587 16.8 20.5957 16.8 19.8C16.7999 19.3551 16.8987 18.9157 17.0894 18.5138C17.2801 18.1118 17.5577 17.7572 17.9023 17.4758C18.2469 17.1944 18.6498 16.9931 19.0818 16.8866C19.5138 16.7801 19.964 16.771 20.4 16.86V10.8H16.8V7.20001ZM12 16.86V15.6H14.4V19.8C14.4 20.5957 14.0839 21.3587 13.5213 21.9213C12.9587 22.4839 12.1956 22.8 11.4 22.8C10.6043 22.8 9.84124 22.4839 9.27863 21.9213C8.71602 21.3587 8.39995 20.5957 8.39995 19.8C8.39986 19.3551 8.49873 18.9157 8.68939 18.5138C8.88006 18.1118 9.15775 17.7572 9.50235 17.4758C9.84694 17.1944 10.2498 16.9931 10.6818 16.8866C11.1138 16.7801 11.564 16.771 12 16.86V16.86Z" fill="#595959" />
                                         </svg>
 
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">Media Manager</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Media Manager</h3>
+                                </a>
                             </li>
                             <li className="pt-3">
-                                <NavLink to="partnership-manager" className="d-flex align-items-center">
+                                <a href="#" className="d-flex align-items-center">
                                     <span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_1_12310)">
@@ -147,42 +146,42 @@ const Sidebar =()=>{
                                             </defs>
                                         </svg>
                                     </span>
-                                    <h3 className=" mb-0 fs-6 ps-2 fw-normal">Partnership Manager</h3>
-                                </NavLink>
+                                    <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Partnership Manager</h3>
+                                </a>
                             </li>
                         </ul>
                         <div className="position-absolute lower-li">
                             <ul className="list-unstyled px-3">
                                 <li className="pt-3">
-                                    <NavLink to="/support" className="d-flex align-items-center">
+                                    <a href="#" className="d-flex align-items-center">
                                         <span>
                                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.13626 8.13628L3.92893 3.92896M3.92893 18.0711L8.16797 13.8321M13.8611 13.8638L18.0684 18.0711M18.0684 3.92896L13.8287 8.16862M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11ZM15 11C15 13.2091 13.2091 15 11 15C8.79086 15 7 13.2091 7 11C7 8.79086 8.79086 7 11 7C13.2091 7 15 8.79086 15 11Z" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
                                         </span>
-                                        <h3 className=" mb-0 fs-6 ps-2 fw-normal">Support</h3>
-                                    </NavLink>
+                                        <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Support</h3>
+                                    </a>
                                 </li>
                                 <li className="pt-3">
-                                    <NavLink to="/settings" className="d-flex align-items-center">
+                                    <a href="#" className="d-flex align-items-center">
                                         <span>
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.012 0.25C10.746 0.258 11.477 0.343 12.194 0.503C12.3465 0.53705 12.4846 0.617903 12.5889 0.734261C12.6933 0.850618 12.7587 0.996668 12.776 1.152L12.946 2.679C12.97 2.89428 13.0442 3.10093 13.1626 3.28231C13.281 3.46368 13.4404 3.61473 13.6278 3.72329C13.8153 3.83185 14.0256 3.89489 14.2419 3.90735C14.4581 3.9198 14.6743 3.88132 14.873 3.795L16.274 3.18C16.4162 3.11735 16.5744 3.10044 16.7267 3.13161C16.879 3.16278 17.0178 3.24049 17.124 3.354C18.1359 4.43509 18.8895 5.73161 19.328 7.146C19.374 7.29464 19.3726 7.45389 19.324 7.60171C19.2755 7.74953 19.1821 7.87858 19.057 7.971L17.815 8.887C17.6403 9.0153 17.4983 9.1829 17.4004 9.37625C17.3025 9.56961 17.2515 9.78328 17.2515 10C17.2515 10.2167 17.3025 10.4304 17.4004 10.6237C17.4983 10.8171 17.6403 10.9847 17.815 11.113L19.058 12.028C19.1835 12.1204 19.2772 12.2495 19.3259 12.3976C19.3747 12.5456 19.3761 12.7051 19.33 12.854C18.8913 14.2683 18.1378 15.5648 17.126 16.646C17.0201 16.7593 16.8816 16.8369 16.7298 16.8682C16.5779 16.8996 16.4201 16.8831 16.278 16.821L14.871 16.204C14.6726 16.117 14.4565 16.0779 14.2402 16.09C14.0238 16.102 13.8134 16.1648 13.6259 16.2733C13.4383 16.3817 13.279 16.5328 13.1607 16.7143C13.0424 16.8958 12.9685 17.1026 12.945 17.318L12.776 18.844C12.7589 18.9976 12.6948 19.1423 12.5924 19.2581C12.49 19.3739 12.3544 19.4553 12.204 19.491C10.7555 19.8356 9.24642 19.8356 7.79797 19.491C7.64757 19.4553 7.5119 19.3739 7.4095 19.2581C7.30711 19.1423 7.24301 18.9976 7.22597 18.844L7.05797 17.32C7.03347 17.1052 6.95892 16.8991 6.84029 16.7183C6.72166 16.5376 6.56228 16.3872 6.37495 16.2792C6.18762 16.1712 5.97757 16.1087 5.76169 16.0967C5.54581 16.0847 5.33013 16.1235 5.13197 16.21L3.72597 16.826C3.58375 16.8883 3.4257 16.9049 3.27363 16.8736C3.12156 16.8422 2.98296 16.7645 2.87697 16.651C1.86468 15.5686 1.11111 14.2707 0.672971 12.855C0.626868 12.7061 0.628288 12.5466 0.677034 12.3986C0.72578 12.2505 0.819431 12.1214 0.944971 12.029L2.18797 11.113C2.36282 10.9848 2.50501 10.8173 2.60302 10.6239C2.70103 10.4305 2.75211 10.2168 2.75211 10C2.75211 9.78321 2.70103 9.56947 2.60302 9.3761C2.50501 9.18273 2.36282 9.01517 2.18797 8.887L0.944971 7.973C0.819609 7.88052 0.726156 7.75129 0.677592 7.60327C0.629028 7.45525 0.627762 7.29577 0.673971 7.147C1.1125 5.73262 1.86606 4.43611 2.87797 3.355C2.98416 3.24149 3.12298 3.16378 3.27526 3.13261C3.42753 3.10144 3.58573 3.11835 3.72797 3.181L5.12797 3.796C5.32699 3.88227 5.54347 3.92066 5.76002 3.90809C5.97657 3.89551 6.18715 3.83232 6.37484 3.7236C6.56254 3.61487 6.72212 3.46363 6.84076 3.28204C6.9594 3.10045 7.0338 2.89356 7.05797 2.678L7.22797 1.152C7.24513 0.996355 7.31058 0.849984 7.41513 0.733414C7.51968 0.616845 7.6581 0.535924 7.81097 0.502C8.52797 0.343 9.26097 0.259 10.012 0.25ZM9.99997 7C9.20432 7 8.44126 7.31607 7.87865 7.87868C7.31604 8.44129 6.99997 9.20435 6.99997 10C6.99997 10.7956 7.31604 11.5587 7.87865 12.1213C8.44126 12.6839 9.20432 13 9.99997 13C10.7956 13 11.5587 12.6839 12.1213 12.1213C12.6839 11.5587 13 10.7956 13 10C13 9.20435 12.6839 8.44129 12.1213 7.87868C11.5587 7.31607 10.7956 7 9.99997 7Z" fill="#667085" />
                                             </svg>
                                         </span>
-                                        <h3 className=" mb-0 fs-6 ps-2 fw-normal">Settings</h3>
-                                    </NavLink>
+                                        <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Settings</h3>
+                                    </a>
                                 </li>
                                 <li className="pt-3">
-                                    <NavLink to="/sign-out" className="d-flex align-items-center">
+                                    <a href="#" className="d-flex align-items-center">
                                         <span>
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M14 15L19 10M19 10L14 5M19 10H7M7 1H5.8C4.11984 1 3.27976 1 2.63803 1.32698C2.07354 1.6146 1.6146 2.07354 1.32698 2.63803C1 3.27976 1 4.11984 1 5.8V14.2C1 15.8802 1 16.7202 1.32698 17.362C1.6146 17.9265 2.07354 18.3854 2.63803 18.673C3.27976 19 4.11984 19 5.8 19H7" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
 
                                         </span>
-                                        <h3 className=" mb-0 fs-6 ps-2 fw-normal">Sign Out</h3>
-                                    </NavLink>
+                                        <h3 className="text-gray mb-0 fs-6 ps-2 fw-normal">Sign Out</h3>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
