@@ -6,37 +6,53 @@ import { useEffect, useState } from "react";
 import { DiscProgress, NoRecordsFound } from "../../common/ResponseDisplay";
 import Pagination from "react-js-pagination";
 import { Modal } from '@mui/material';
-import BasicModal from "../../common/BasicModal";
+import Box from '@mui/material/Box';
+import EditTsOfTheWeek from './EditTsOfTheWeek'
 
+
+const style = {
+	position: 'absolute',
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)',
+	width: 800,
+	bgcolor: 'background.paper',
+	border: '1px solid pink',
+	borderRadius:'15px',
+	boxShadow: 24,
+	p: 4,
+  };
 
 const Locations = () => {
 
+	const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const[selectedKey,setSelectedKey]=useState({desktop imat : "" ,mogile.})
+
+
 	const dispatch = useDispatch()
 	const { advertsLocationsList, loadingStatus } = useSelector((state) => state.adverts)
-	const [trigger, setTrigger] = useState(0);
-	const [open, setOpen] = useState(false);
-	
+
 	useEffect(() => {
 		dispatch(getAdvertsLocations())
 		console.log(advertsLocationsList)
 	}, [dispatch])
-	let keyid = 0;
-	
 
-	const openEditing=(item)=>{
-		console.log(item)
+	const handleEditing=(_key)=>{
+		setSelectedKey.(_key);
+		handleOpen();
 	}
+	let keyid = 0;
 	return <>
 		<div className="recent-signup">
-		
+		<Modal open={open}    onClose={handleClose}     aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box sx={style}>
+			<EditTsOfTheWeek dafault_spaces={advertsLocationsList[selectedKey]?.default_spaces} advert_price={advertsLocationsList[selectedKey]?.price}/>
+		</Box>
+
+      </Modal>
 			<div className="mt-3 border-lightgray  py-2 px-2 ">
-			<button onClick={() => {setOpen(true)}}
-      >Set opon</button>
-	  <button onClick={() => {setOpen(false)}}
-      >Set onClose</button>
-			<BasicModal open={open} trigger={trigger}>
-				Modal custom content will be hereg dfsg sdfg sdfg dfg dfg dfg dfg dfg dfg
-				</BasicModal>
 				<div className="d-lg-flex justify-content-between">
 					<div className="d-flex align-items-center">
 						<h3 className="fw-bold fs-18 mb-0">Advert Locations</h3>
@@ -82,7 +98,7 @@ const Locations = () => {
 												<td>{row.available_spaces}</td>
 												<td>{row.default_spaces}</td>
 												<td>--PENDING</td>
-												<td onClick={()=>openEditing(item)}><img src={DotsVertical} /></td>
+												<td onClick={()=>handleEditing(item)}><img src={DotsVertical} /></td>
 											</tr></>)
 									
 
