@@ -9,7 +9,7 @@ class advertService {
          }
     
     getLocations = async (urlParam={data:'test'},payload) =>{
-    return await getRequest('dashboard/live/adverts?records_per_page=10',urlParam);
+    return await getRequest('dashboard/advert/locations?test=abcgg',urlParam);
         }     
 
 }

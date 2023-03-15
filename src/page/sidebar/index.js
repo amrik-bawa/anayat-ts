@@ -3,8 +3,6 @@ import { useLocation,NavLink } from "react-router-dom";
 
 const Sidebar =()=>{
     const location = useLocation();
-    console.log(location.pathname)
-
     useEffect(() => {
         const allWithClass = Array.from(
           document.querySelectorAll('.sidebar h3.fw-normal')
