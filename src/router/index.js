@@ -16,6 +16,7 @@ import Administrators from '../page/user-manager/administrators';
 import UserManager from '../page/user-manager';
 import LiveAdverts from '../page/advert-manager/live-adverts';
 import Locations from '../page/advert-manager/locations';
+import Test from '../page/common/Test'
 
 // const isLoggedIn=()=>{
 //     if(localStorage.getItem('token')===null){
@@ -48,6 +49,7 @@ const AuthRoutes = () => {
         }
           ],
     },
+    {path:'/orders', element: <Test/>}
     ]
     return useRoutes(routes);
 }
