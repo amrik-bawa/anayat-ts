@@ -2,22 +2,41 @@ import TabAvtar from "../../../assets/images/tab-avtar.png";
 import DotsVertical from "../../../assets/images/dots-vertical.svg";
 import { getAdvertsLocations } from "../../../store/adverts/advertsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DiscProgress, NoRecordsFound } from "../../common/ResponseDisplay";
 import Pagination from "react-js-pagination";
+import { Modal } from '@mui/material';
+import BasicModal from "../../common/BasicModal";
+
 
 const Locations = () => {
 
 	const dispatch = useDispatch()
 	const { advertsLocationsList, loadingStatus } = useSelector((state) => state.adverts)
-
+	const [trigger, setTrigger] = useState(0);
+	const [open, setOpen] = useState(false);
+	
 	useEffect(() => {
 		dispatch(getAdvertsLocations())
+		console.log(advertsLocationsList)
 	}, [dispatch])
 	let keyid = 0;
+	
+
+	const openEditing=(item)=>{
+		console.log(item)
+	}
 	return <>
 		<div className="recent-signup">
+		
 			<div className="mt-3 border-lightgray  py-2 px-2 ">
+			<button onClick={() => {setOpen(true)}}
+      >Set opon</button>
+	  <button onClick={() => {setOpen(false)}}
+      >Set onClose</button>
+			<BasicModal open={open} trigger={trigger}>
+				Modal custom content will be hereg dfsg sdfg sdfg dfg dfg dfg dfg dfg dfg
+				</BasicModal>
 				<div className="d-lg-flex justify-content-between">
 					<div className="d-flex align-items-center">
 						<h3 className="fw-bold fs-18 mb-0">Advert Locations</h3>
@@ -63,7 +82,7 @@ const Locations = () => {
 												<td>{row.available_spaces}</td>
 												<td>{row.default_spaces}</td>
 												<td>--PENDING</td>
-
+												<td onClick={()=>openEditing(item)}><img src={DotsVertical} /></td>
 											</tr></>)
 									
 
