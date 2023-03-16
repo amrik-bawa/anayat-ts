@@ -78,8 +78,8 @@ const Logs = () => {
 const QRouter = () => {
     return (
 
-        <Router basename='/dev/react'>
-        {/* <Router basename='/'> */}
+        // <Router basename='/dev/react'>
+        <Router basename='/'>
             <Logs />
             <AuthRoutes />
             

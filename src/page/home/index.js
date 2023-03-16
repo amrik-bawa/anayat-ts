@@ -8,12 +8,13 @@ import Chart from "../../assets/images/chart.svg";
 import Graph from "../../assets/images/graph.png";
 import TabAvtar from "../../assets/images/tab-avtar.png";
 import DotsVertical from "../../assets/images/dots-vertical.svg";
-import Add from "../../assets/images/add.svg";
+
 import VerticalDots3 from "../../assets/images/vertical3Dots.svg";
 import Cross from "../../assets/images/cross.svg";
 import Admin from "../../assets/images/admin.png";
 import RoundTick from "../../assets/images/round-tick.svg";
 import Msg from "../../assets/images/msg.svg";
+import RemindersMini from '../components/reminders/RemindersMini';
 const Home=()=>{
     return <div className="px-1 py-2">
     <Row className="">
@@ -271,19 +272,7 @@ const Home=()=>{
                     <div className="h-100">
                         <Row>
                             <Col lg="12">
-                                <div className="p-2 bg-dark rounded-2 mt-3 mt-lg-0">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="d-flex align-items-center">
-                                            <div className="bg-white rounded-2 p-2">
-                                                <h6 className="fs-12 fw-bold text-gray mb-0">12</h6>
-                                            </div>
-                                            <h4 className="text-white fs-5 fw-semibold ps-2 mb-0"> Reminders</h4>
-                                        </div>
-                                        <div>
-                                            <img src={Add} alt="" />
-                                        </div>
-                                    </div>
-                                </div>
+                                <RemindersMini/>
                             </Col>
                             <Col lg="12" className="mt-3">
                                 <div className="">
