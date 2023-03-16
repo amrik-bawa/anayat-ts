@@ -33,7 +33,7 @@ export default function AccountMenu() {
 
   const  handleLogout=()=>{
     dispatch(doLogout()).then((resp)=>{
-    if(token===null){
+    if(localStorage.getItem('token')===null){
     navigate('/login')
 
     }
