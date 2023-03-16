@@ -113,13 +113,7 @@ const RecentSignUp = () => {
                                 
                             </tbody>
                         </table>
-                        </>
-                    }else{
-                        return <NoRecordsFound height='500px'/>
-                    }
-
-                })()}
-                <Pagination
+                        <Pagination
           activePage={1}
           itemsCountPerPage={5}
           totalItemsCount={450}
@@ -130,47 +124,13 @@ const RecentSignUp = () => {
           lastPageText=''
           onChange={(pageNumber)=>{dispatch(getSignUpsList({page:pageNumber}))}}
         />
-                <div className="d-flex justify-content-between align-items-center p-2 pb-0">
-                    <a href="#" className="border-lightgray text-decoration-none d-flex py-1 px-3 justify-content-center text-dark fs-12 text-decoration-none align-items-center"><svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.8334 7H1.16675M1.16675 7L7.00008 12.8333M1.16675 7L7.00008 1.16667" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                        <span className='ps-2'>Previous</span>
-                    </a>
+                        </>
+                    }else{
+                        return <NoRecordsFound height='500px'/>
+                    }
 
-                    
-
-
-                    <div className='pagination'>
-                        <ul className='list-unstyled d-flex mb-0'>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>1</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>2</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>3</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>...</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>8</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>9</a>
-                            </li>
-                            <li className='pe-3'>
-                                <a href="#" className='text-dark text-decoration-none fs-12'>10</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <a href="#" className="border-lightgray text-decoration-none d-flex  py-1 px-3 justify-content-center align-items-center text-dark fs-12 text-decoration-none"> <span className='pe-2'>Next</span><svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.16663 7H12.8333M12.8333 7L6.99996 1.16667M12.8333 7L6.99996 12.8333" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-
-                    </a>
-                </div>
+                })()}
+                
             </div>
 
         </div>
