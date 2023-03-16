@@ -23,7 +23,7 @@ const LiveAdverts=()=>{
              <div className="d-flex align-items-center">
                  <h3 className="fw-bold fs-18 mb-0">Live Advert</h3>
                  <div className="ms-1">
-                     <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">10 Users</h6>
+                     <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">{(liveAdvertsList && liveAdvertsList?.total_records) ? liveAdvertsList.total_records:'N/a'} Users</h6>
                  </div>
              </div>
              <div>

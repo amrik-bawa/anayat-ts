@@ -28,7 +28,7 @@ const Locations = () => {
 	const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const[selectedKey,setSelectedKey]=useState({desktop imat : "" ,mogile.})
+  const[selectedKey,setSelectedKey]=useState('')
 
 
 	const dispatch = useDispatch()
@@ -40,7 +40,7 @@ const Locations = () => {
 	}, [dispatch])
 
 	const handleEditing=(_key)=>{
-		setSelectedKey.(_key);
+		setSelectedKey(_key);
 		handleOpen();
 	}
 	let keyid = 0;

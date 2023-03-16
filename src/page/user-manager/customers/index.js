@@ -1,7 +1,7 @@
 import DotsVertical from "../../../assets/images/dots-vertical.svg";
 import { getCustomersList } from "../../../store/user-manager/customers/customersSlice";
 import { useDispatch,useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {DiscProgress,NoRecordsFound} from "../../common/ResponseDisplay";
 import Pagination from "react-js-pagination";
 
@@ -11,8 +11,9 @@ const Customers=()=>{
 		const { customersList,loadingStatus } = useSelector((state) => state.customers)
 	
 		useEffect(() => {
-			dispatch(getCustomersList())
-		}, [dispatch])
+			dispatch(getCustomersList()).then(()=>{
+			})
+		}, [])
 		return <>
 		<div className="recent-signup">
      <div className="mt-3 border-lightgray  py-2 px-2 ">
@@ -20,7 +21,7 @@ const Customers=()=>{
              <div className="d-flex align-items-center">
                  <h3 className="fw-bold fs-18 mb-0">Customers</h3>
                  <div className="ms-1">
-                     <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">10 Users</h6>
+                     <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">{(customersList && customersList?.total_records) ? customersList.total_records:'N/a'} Users</h6>
                  </div>
              </div>
              <div>
@@ -36,6 +37,7 @@ const Customers=()=>{
 			if(loadingStatus){
 				return <DiscProgress height='500px'/>
 			}else if(customersList && customersList.users && customersList.users.length>0){
+				
 				return <>
 				<table className="table mb-0">
 				<thead>
@@ -79,13 +81,7 @@ const Customers=()=>{
    
 				</tbody>
 			</table>
-			
-		  </>
-			}else{
-				return <NoRecordsFound/>
-			}
-		})()}
-<Pagination
+			<Pagination
 			activePage={1}
 			itemsCountPerPage={5}
 			totalItemsCount={450}
@@ -96,45 +92,13 @@ const Customers=()=>{
 			lastPageText=''
 			onChange={(pageNumber)=>{dispatch(getCustomersList({page:pageNumber}))}}
 		  />
-<div className="d-flex justify-content-between align-items-center p-2 pb-0">
-             <a href="#" className="border-lightgray text-decoration-none d-flex py-1 px-3 justify-content-center text-dark fs-12 text-decoration-none align-items-center"><svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http:www.w3.org/2000/svg">
-                 <path d="M12.8334 7H1.16675M1.16675 7L7.00008 12.8333M1.16675 7L7.00008 1.16667" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-             </svg>
-                 <span className='ps-2'>Previous</span>
-             </a>
-             <div className='pagination'>
-                 <ul className='list-unstyled d-flex mb-0'>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>1</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>2</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>3</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>...</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>8</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>9</a>
-                     </li>
-                     <li className='pe-3'>
-                         <a href="#" className='text-dark text-decoration-none fs-12'>10</a>
-                     </li>
-                 </ul>
-             </div>
-             <a href="#" className="border-lightgray text-decoration-none d-flex  py-1 px-3 justify-content-center align-items-center text-dark fs-12 text-decoration-none"> <span className='pe-2'>Next</span><svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http:www.w3.org/2000/svg">
-                 <path d="M1.16663 7H12.8333M12.8333 7L6.99996 1.16667M12.8333 7L6.99996 12.8333" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-             </svg>
+		  </>
+			}else{
+				return <NoRecordsFound/>
+			}
+		})()}
 
-             </a>
-         </div>
      </div>
-
  </div>
 		</>
 

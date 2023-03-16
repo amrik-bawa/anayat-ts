@@ -13,8 +13,7 @@ const RecentSignUp = () => {
 
     useEffect(() => {
         dispatch(getSignUpsList())
-    }, [dispatch])
-
+    }, [])
     return <>
         <div className="recent-signup">
             <div className="mt-3 border-lightgray  py-2 px-2 ">
@@ -22,7 +21,7 @@ const RecentSignUp = () => {
                     <div className="d-flex align-items-center">
                         <h3 className="fw-bold fs-18 mb-0">Recent Sign-Ups</h3>
                         <div className="ms-1">
-                            <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">10 Users</h6>
+                            <h6 className="text-danger fs-12 mb-0 ads-bg rounded-pill px-2 py-1">{(signUpsList && signUpsList?.total_records) ? signUpsList.total_records:'N/a'} Users</h6>
                         </div>
                     </div>
                     <div>
@@ -34,7 +33,6 @@ const RecentSignUp = () => {
                     </div>
                 </div>
                 {(()=>{
-                    console.log(signUpsList , signUpsList?.users , signUpsList?.users?.length)
                     if(loadingStatus){
                         return <DiscProgress height='500px'/>
                     }else if(signUpsList && signUpsList.users && signUpsList.users.length>0){

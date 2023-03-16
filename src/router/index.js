@@ -18,6 +18,7 @@ import LiveAdverts from '../page/advert-manager/live-adverts';
 import Locations from '../page/advert-manager/locations';
 import Test2 from '../page/common/Test2'
 import Test3 from '../page/common/Test3'
+import CommingSoon from '../page/common/CommingSoon'
 
 // const isLoggedIn=()=>{
 //     if(localStorage.getItem('token')===null){
@@ -36,6 +37,8 @@ const AuthRoutes = () => {
         children: [
             { index: true, element: <Home /> },
             { path: 'dashboard', element: <Home /> },
+            {path:'/ts-fans', element: <CommingSoon/>},
+            {path:'/orders', element: <CommingSoon/>},
             { path: 'advert-manager', element: <AdvertManager />,
             children:[
                 { index:true, element: <LiveAdverts/> },
@@ -50,6 +53,8 @@ const AuthRoutes = () => {
         }
           ],
     },
+    
+    {path:'/ts-fans', element: <CommingSoon/>},
     {path:'/test', element: <Test2/>},
     {path:'/test3', element: <Test3/>}
     ]
@@ -72,6 +77,8 @@ const Logs = () => {
 
 const QRouter = () => {
     return (
+
+        // <Router basename='/dev/react'>
         <Router basename='/'>
             <Logs />
             <AuthRoutes />

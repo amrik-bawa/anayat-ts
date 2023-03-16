@@ -16,10 +16,17 @@ export const doLogin = (payload) => async (dispatch) => {
 };
 
 
+export const doLogout = (payload) => async (dispatch) => {
+
+  return await dispatch(logoutSuccess())
+
+  
+};
+
 
 const initialState = {
     loginData: [],
-    token:null,
+    token:localStorage.getItem('token'),
     loadingStatus:true
 }
 
@@ -28,15 +35,27 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-        state.success = true;
-        state.loginData = action.payload;
-        localStorage.setItem('token', state.loginData.token);
-    },
-    loginError: (state, action) => {
-        state.loginData = action.payload;
-        state.loadingStatus = false;
-        console.log(state.loginData)
-    },
+      state.success = true;
+      state.loginData = action.payload;
+      state.token=state.loginData.token;
+      localStorage.setItem('token', state.loginData.token);
+  },
+  loginError: (state, action) => {
+      state.loginData = action.payload;
+      state.loadingStatus = false;
+  },
+  logoutSuccess: (state, action) => {
+    localStorage.removeItem('token');
+    console.log('logging out')
+    state.success = true;
+    state.loginData = null;
+    state.token=null;
+    
+},
+logoutError: (state, action) => {
+    state.loginData = action.payload;
+    state.loadingStatus = false;
+},
     setloadingStatus: (state, action) => {
         state.loadingStatus = action.payload;
     },
@@ -44,6 +63,6 @@ export const loginSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSuccess,loginError,setloadingStatus } = loginSlice.actions
+export const { loginSuccess,loginError,setloadingStatus,logoutSuccess,logoutError } = loginSlice.actions
 
 export default loginSlice.reducer

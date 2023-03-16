@@ -1,7 +1,7 @@
 import Logo from "../../assets/images/logo.png";
 import Avtar from "../../assets/images/avtar.svg";
+import AccountMenu from "../common/AccountMenu";
 const Header =()=>{
-
 
     return <>
         <header className="nav-bar">
@@ -57,7 +57,7 @@ const Header =()=>{
                                         </svg>
                                     </div>
                                     <div>
-                                        <img src={Avtar} />
+                                        <AccountMenu/>
                                     </div>
                                 </div>
                             </div>
