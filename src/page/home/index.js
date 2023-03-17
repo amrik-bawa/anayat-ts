@@ -14,7 +14,9 @@ import Cross from "../../assets/images/cross.svg";
 import Admin from "../../assets/images/admin.png";
 import RoundTick from "../../assets/images/round-tick.svg";
 import Msg from "../../assets/images/msg.svg";
-import RemindersMini from '../components/reminders/RemindersMini';
+import RemindersMini from '../reminders/RemindersMini';
+import RemindersListVerti from '../reminders/RemindersListVerti';
+
 const Home=()=>{
     return <div className="px-1 py-2">
     <Row className="">
@@ -269,6 +271,7 @@ const Home=()=>{
                     </div>
                 </Col>
                 <Col lg="6">
+                    
                     <div className="h-100">
                         <Row>
                             <Col lg="12">
@@ -302,82 +305,7 @@ const Home=()=>{
                                     </div>
                                 </div>
                             </Col>
-                            <Col lg="12">
-                                <div className="border-lightgray mt-3 p-2">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <h3 className="text-gray fs-6 fw-bold mb-0">Branding</h3>
-                                        <div>
-                                            <a href="#" className="lightred-btn fw-semibold px-3 py-1 rounded-pill fs-6 text-danger text-decoration-none">High</a>
-                                        </div>
-                                    </div>
-                                    <h3 className="fs-5 fw-bold mt-3">
-                                        Outline promotional banner message
-                                    </h3>
-                                    <p className="text-gray fs-6 mb-2">Placeholder for card text.</p>
-                                    <div className=" d-flex justify-content-between align-items-center">
-                                        <div className="d-flex">
-                                            <div className="admin-img">
-                                                <img src={Admin} alt="" className="img-fluid" />
-                                            </div>
-                                            <div className="admin-img-1">
-                                                <img src={Admin} className="img-fluid" />
-                                            </div>
-                                        </div>
-                                        <div className="d-flex">
-                                            <div className="d-flex">
-                                                <span><img src={Msg} /></span>
-                                                <h6 className="fw-bold fs-6 fw-bold mb-0 ps-1 text-gray">12</h6>
-                                            </div>
-                                            <div className="d-flex ps-2">
-                                                <span>
-                                                    <img src={RoundTick} alt="" />
-                                                </span>
-                                                <h6 className="fw-bold fs-6 fw-bold mb-0 ps-1 text-gray">1/3</h6>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </Col>
-                            <Col lg="12">
-                                <div className="border-lightgray mt-3 p-2">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <h3 className="text-gray fs-6 fw-bold mb-0">Design</h3>
-
-                                    </div>
-                                    <h3 className="fs-5 fw-bold mt-3">
-                                        Landing page design
-                                    </h3>
-                                    <p className="text-gray fs-6 mb-2">Placeholder for card text.<br />Enter text into this container.</p>
-                                    <div className=" d-flex justify-content-between align-items-center">
-                                        <div className="d-flex">
-                                            <div className="admin-img">
-                                                <img src={Admin} />
-                                            </div>
-                                            <div className="admin-img-1">
-                                                <img src={Admin} />
-                                            </div>
-                                        </div>
-                                        <div className="d-flex">
-                                            <div className="d-flex">
-                                                <span><img src={Msg} /></span>
-                                                <h6 className="fw-bold fs-6 fw-bold mb-0 ps-1 text-gray">12</h6>
-                                            </div>
-                                            <div className="d-flex ps-2">
-                                                <span>
-                                                    <img src={RoundTick} />
-                                                </span>
-                                                <h6 className="fw-bold fs-6 fw-bold mb-0 ps-1 text-gray">1/3</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col lg="12" className="mt-3">
-                                <a href="#" className=" btn gray-btn fw-bold fs-16 text-dark text-decoration-none w-100">View All</a>
-                            </Col>
+                            <RemindersListVerti/>
                         </Row>
                     </div>
                 </Col>

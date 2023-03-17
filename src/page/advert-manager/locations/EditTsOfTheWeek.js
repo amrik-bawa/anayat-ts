@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import HeadingA from "../../common/HeadingA"
 
 const EditTsOfTheWeek=({dafault_spaces,advert_price})=> {
 
@@ -52,7 +53,7 @@ console.log('dafault_spaces',dafault_spaces)
   return (
     <div>
       <form action="" id="login" method="post" onSubmit={handleSubmit}>
-        <h1>Edit TS of the week</h1>
+        <HeadingA name='Edit TS of the week'/>
         <p className="item">
           <label for="email"> Advert Spaces </label>
           <input

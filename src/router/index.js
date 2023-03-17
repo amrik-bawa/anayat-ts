@@ -19,6 +19,7 @@ import Locations from '../page/advert-manager/locations';
 import Test2 from '../page/common/Test2'
 import Test3 from '../page/common/Test3'
 import CommingSoon from '../page/common/CommingSoon'
+import Reminders from '../page/reminders';
 
 // const isLoggedIn=()=>{
 //     if(localStorage.getItem('token')===null){
@@ -39,6 +40,7 @@ const AuthRoutes = () => {
             { path: 'dashboard', element: <Home /> },
             {path:'/ts-fans', element: <CommingSoon/>},
             {path:'/orders', element: <CommingSoon/>},
+            {path:'/reminders', element: <Reminders/>},
             { path: 'advert-manager', element: <AdvertManager />,
             children:[
                 { index:true, element: <LiveAdverts/> },
@@ -55,6 +57,7 @@ const AuthRoutes = () => {
     },
     
     {path:'/ts-fans', element: <CommingSoon/>},
+    
     {path:'/test', element: <Test2/>},
     {path:'/test3', element: <Test3/>}
     ]
