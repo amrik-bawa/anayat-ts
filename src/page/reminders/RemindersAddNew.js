@@ -9,7 +9,7 @@ const RemindersAddNew=()=>{
     const [categories,setCategories]=useState([])
     const [isDisabled,setIsDisabled]=useState(true)
 
-
+  
     //---fetch categories
     useEffect(() => {
         dispatch(getCategoriesList()).then(()=>{
