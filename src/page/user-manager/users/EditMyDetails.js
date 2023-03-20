@@ -39,7 +39,7 @@ const handleSubmit = event => {
  const butts=['S','M','L','XL','XXL','XXXL']
  const bodies=['Athletic','Average','Curvaceous','Slim']
  const cockSizes=['3 in','4 in','5 in','6 in','7 in','8 in','9 in','10 in','11 in','12 in','13 in','Ask Me']
-const languages=['English','Spanish','Italian','German','Russian','French','Chinese','Portuguese','Other'];
+const languages=['English','Spanish','Italian','German','Russian','French','Chinese','Portuguese','Other','Punjabi'];
 
  console.log('user details ',userDetails)
     
@@ -274,8 +274,13 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <div className="input-wrap two-columns form-field__group validation">
                                 {languages.map((item)=>{
                                     return (<label>
-                                        <input type="checkbox" value={item} name="languages[]"/>
-                                        <span>{item}</span>
+                                        {userDetails?.languages?.split(",").includes(item) ? (
+        <><input type="checkbox" checked value={item} name="languages[]"/>
+         <span> {item} </span></>
+      ) : (
+        <></>
+      )}
+                                        
                                     </label>)
                                 })}
                                 </div>
