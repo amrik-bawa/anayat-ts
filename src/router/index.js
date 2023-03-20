@@ -20,6 +20,12 @@ import Test2 from '../page/common/Test2'
 import Test3 from '../page/common/Test3'
 import CommingSoon from '../page/common/CommingSoon'
 import Reminders from '../page/reminders';
+import EditUser from '../page/user-manager/users/EditUser';
+import EditMyDetails from '../page/user-manager/users/EditMyDetails';
+import EditPaidAds from '../page/user-manager/users/EditPaidAds';
+import EditMedia from '../page/user-manager/users/EditMedia';
+import EditUserLayout from '../page/user-manager/users/EditUserLayout';
+import ErrorPage from '../page/ErrorPage';
 
 // const isLoggedIn=()=>{
 //     if(localStorage.getItem('token')===null){
@@ -49,7 +55,16 @@ const AuthRoutes = () => {
                 ] },
             { path: 'user-manager', element: <UserManager/>,
             children:[
-            { path: 'customers', element: <Customers /> },
+                { path: 'edit-user', element: <EditUserLayout/>,
+                children:[
+                    {index:true ,element:<EditMyDetails/>},
+                    {path:'my-details' ,element:<EditMyDetails/>},
+                    {path:'media' ,element:<EditMedia/>},
+                    {path:'paid-ads' ,element:<EditPaidAds/>},
+                    {path:'*' ,element:<ErrorPage/>}
+                ]
+                 },
+                { path: 'customers', element: <Customers /> },
             { path: 'administrators', element: <Administrators /> },
             ]
         }

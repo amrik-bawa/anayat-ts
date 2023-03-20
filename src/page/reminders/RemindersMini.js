@@ -26,7 +26,7 @@ const style = {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch =useDispatch();
-
+  const { remindersData, remindersProcessing } = useSelector((state) => state.reminders)
   const {loginData,loadingStatus,token}=useSelector((state)=>state.login)
   
 
@@ -49,7 +49,7 @@ const style = {
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
                                             <div className="bg-white rounded-2 p-2">
-                                                <h6 className="fs-12 fw-bold text-gray mb-0">12</h6>
+                                                <h6 className="fs-12 fw-bold text-gray mb-0">{remindersData.length}</h6>
                                             </div>
                                             <h4 className="text-white fs-5 fw-semibold ps-2 mb-0"> Reminders</h4>
                                         </div>

@@ -1,0 +1,97 @@
+.step-tabs {
+    margin-bottom: 70px;
+  }
+  @media (max-width: 1025px) {
+    .step-tabs {
+      margin-bottom: 40px;
+    }
+  }
+  .step-tabs .wrapper-link {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+    column-gap: 20px;
+  }
+  @media (max-width: 1150px) {
+    .step-tabs .wrapper-link {
+      column-gap: 15px;
+    }
+  }
+  @media (max-width: 576px) {
+    .step-tabs .wrapper-link {
+      column-gap: 10px;
+    }
+  }
+  .step-tabs .wrapper-link img {
+    max-width: 30px;
+  }
+  @media (max-width: 1150px) {
+    .step-tabs .wrapper-link img {
+      max-width: 15px;
+    }
+  }
+  @media (max-width: 576px) {
+    .step-tabs .wrapper-link img {
+      max-width: 12px;
+    }
+  }
+  .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink {
+    font-size: 22px;
+    text-align: center;
+    color: #60626a;
+    padding: 18px;
+    width: 32%;
+    background-color: #dadfe7;
+    border-radius: 10px;
+    font-weight: 700;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  @media (max-width: 1150px) {
+    .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink {
+      font-size: 30px;
+    }
+  }
+  @media (max-width: 1024px) {
+    .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink {
+      font-size: 24px;
+      padding: 15px;
+    }
+  }
+  @media (max-width: 576px) {
+    .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink {
+      font-size: 18px;
+      padding: 10px;
+    }
+  }
+  @media (max-width: 400px) {
+    .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink {
+      font-size: 16px;
+    }
+  }
+  .step-tabs .wrapper-link .navlink:hover {
+    box-shadow: 0 0px 1px #000, 0 1px 6px #000;
+  }
+  .step-tabs .wrapper-link span {
+    color: #fff;
+    background-color: #ce0000;
+    cursor: inherit;
+  }
+  .step-tabs .wrapper-link span, .step-tabs .wrapper-link .navlink.active{
+    background-color: red !important;
+    color: white;
+  }

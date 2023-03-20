@@ -14,8 +14,8 @@ import Cross from "../../assets/images/cross.svg";
 import Admin from "../../assets/images/admin.png";
 import RoundTick from "../../assets/images/round-tick.svg";
 import Msg from "../../assets/images/msg.svg";
-import RemindersMini from '../reminders/RemindersMini';
-import RemindersListVerti from '../reminders/RemindersListVerti';
+
+import RemindersWidget from '../reminders/RemindersWidget';
 
 const Home=()=>{
     return <div className="px-1 py-2">
@@ -270,13 +270,13 @@ const Home=()=>{
                         </Row>
                     </div>
                 </Col>
-                <Col lg="6">
+                <Col lg='6'>
+                    <RemindersWidget/>
+                </Col>
+                {/* <Col lg="6">
                     
                     <div className="h-100">
                         <Row>
-                            <Col lg="12">
-                                <RemindersMini/>
-                            </Col>
                             <Col lg="12" className="mt-3">
                                 <div className="">
                                     <div className="d-flex rounded-top justify-content-between align-items-center p-2 bg-lightblue">
@@ -305,10 +305,10 @@ const Home=()=>{
                                     </div>
                                 </div>
                             </Col>
-                            <RemindersListVerti/>
+                            
                         </Row>
                     </div>
-                </Col>
+                </Col> */}
                 <Col>
                     <div className="recent-signup">
                         <div className="mt-3 border-lightgray  py-2 px-2 " style={{border:'2px solid red'}}>

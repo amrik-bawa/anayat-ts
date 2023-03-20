@@ -7,6 +7,7 @@ import administratorsSlice  from './user-manager/administrators/administratorsSl
 import customersSlice from './user-manager/customers/customersSlice'
 import loginSlice from './login/loginSlice'
 import remindersSlice from './reminders/remindersSlice'
+import usersSlice from './user-manager/users/usersSlice'
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -16,6 +17,7 @@ export const store = configureStore({
     administrators:administratorsSlice,
     customers:customersSlice,
     login:loginSlice,
-    reminders:remindersSlice
+    reminders:remindersSlice,
+    users:usersSlice
   },
 })
