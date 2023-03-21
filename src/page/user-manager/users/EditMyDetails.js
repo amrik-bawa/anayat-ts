@@ -1,18 +1,139 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch,useSelector } from "react-redux";
 import { getUserDetails } from "../../../store/user-manager/users/usersSlice";
-
+import { getMonthsArray,getDaysInMonth,getBirthYearsArray } from "../../../Utils";
 const EditMyDetails=()=>{
-
+    // const [showBirthDay,setShowBirthDay]=useState(false)
+    const [birthDaysArray,setBirthDaysArray]=useState([])
     const dispatch = useDispatch()
-	const { userDetails,userDetailsProcessing } = useSelector((state) => state.users)
-	
+	const { userDetails,userDetailsProcessing } = useSelector((state) => state.users) // postData
+    const [postData,setPostData]=useState({});
 		useEffect(() => {
-			 dispatch(getUserDetails()).then(()=>{
-                console.log('user details ',userDetails)
-			})
+			 dispatch(getUserDetails());
 		}, [])
+
         
+
+        useEffect(() => {
+            setPostData(userDetails)
+       }, [userDetails])
+   
+       useEffect(() => {
+        if(postData.month_birth!='' && postData.year_birth!=''){
+            setBirthDaysArray(getDaysInMonth(postData.month_birth,postData.year_birth))
+        }else{
+            setBirthDaysArray([])
+        }
+        }, [postData.year_birth,postData.month_birth])
+
+
+      
+    //    handleChange(fieldName , value)
+    //    setPostData((prevState)=>{
+    //    { ...prevState,{[fieldName] : value}}
+    //    )
+
+
+       const handleChange = evt => {
+        const name = evt.target.name;
+        const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
+        setPostData({
+          ...postData,
+          [name]: value
+        })
+      }
+
+      const handleChangeLanguage = (e) => {
+        const { value, checked } = e.target;
+        const PDlanguages  = postData.languages.split(',');
+        if (checked) {
+            setPostData({
+                ...postData,
+                languages: [...PDlanguages, value].toString()
+              })
+        }
+        else {
+                const removedLang=PDlanguages.filter((e) => e !== value);
+            setPostData({
+                ...postData,
+                languages: removedLang.toString()
+              })
+        }
+      };
+
+      
+
+
+
+      
+
+      const handleChangeGenderService = (e) => {
+        const { value, checked } = e.target;
+        const gender_service  = postData.gender_service;
+        if (checked) {
+            setPostData({
+                ...postData,
+                gender_service: [...gender_service, value]
+              })
+        }
+        else {
+            setPostData({
+                ...postData,
+                gender_service: gender_service.filter((e) => e !== value)
+              })
+        }
+      };
+
+      const handleChangeRateOffer = (e) => {
+        const { value, checked } = e.target;
+        const rateOffers  = postData.rate_offer;
+        if (checked) {
+            setPostData({
+                ...postData,
+                rate_offer: [...rateOffers, value]
+              })
+        }
+        else {
+            setPostData({
+                ...postData,
+                rate_offer: rateOffers.filter((e) => e !== value)
+              })
+        }
+      };
+
+      const handleChangeUsedPPV = (e) => {
+        const { value, checked } = e.target;
+        const usedPpv  = postData.used_ppv;
+        if (checked) {
+            setPostData({
+                ...postData,
+                used_ppv: [...usedPpv, value]
+              })
+        }
+        else {
+            setPostData({
+                ...postData,
+                used_ppv: usedPpv.filter((e) => e !== value)
+              })
+        }
+      };
+
+      const handleChangeUsedSocial = (e) => {
+        const { value, checked } = e.target;
+        const usedSocial  = postData.used_social;
+        if (checked) {
+            setPostData({
+                ...postData,
+                used_social: [...usedSocial, value]
+              })
+        }
+        else {
+            setPostData({
+                ...postData,
+                used_social: usedSocial.filter((e) => e !== value)
+              })
+        }
+      };
 
 
 const handleSubmit = event => {
@@ -21,9 +142,6 @@ const handleSubmit = event => {
     const formDataObj = {};
     myFormData.forEach((value, key) => (formDataObj[key] = value));
     console.log('payload data', formDataObj)
-    // dispatch(addNew(formDataObj)).then(()=>{
-    //   dispatch(getRemindersList())
-    // })
   }
  const dates=[1,2,3,4,5,6,8,9,10,11,12,13,14,15]
  const months=[1,2,3,4,5,6,8,9,10,11,12]
@@ -39,12 +157,10 @@ const handleSubmit = event => {
  const butts=['S','M','L','XL','XXL','XXXL']
  const bodies=['Athletic','Average','Curvaceous','Slim']
  const cockSizes=['3 in','4 in','5 in','6 in','7 in','8 in','9 in','10 in','11 in','12 in','13 in','Ask Me']
-const languages=['English','Spanish','Italian','German','Russian','French','Chinese','Portuguese','Other','Punjabi'];
+const languagesArr=['English','Spanish','Italian','German','Russian','French','Chinese','Portuguese','Other'];
 const genderServices=['Men','Women','MM','MF'];
 const extraServices=['Cum','CIM','DTF','Facial','Filming','Finger/Fisting (Giving)','Finger/Fisting (Receiving)','Foot worship','OWO','Prostate massage','PSE','Rimming (Giving)','Swallow','Watersports'];
 const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
-
- console.log('user details ',userDetails)
     
     return <div className="my-details__section">
     <div className="wrapper">
@@ -74,8 +190,8 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <div className="input-wrap validation">
                                     <input type="text"
                                         className="woocommerce-Input woocommerce-Input--text input-text"
-                                        placeholder="Enter a Username" name="username" id="reg_username"
-                                        autocomplete="username" value="cobydigital" />
+                                        placeholder="Enter a Username" name="user_login" id="reg_username"
+                                        autocomplete="username" value={postData?.user_login} onChange={ handleChange }/>
                                 </div>
                             </div>
                             <div className="line flex">
@@ -108,50 +224,40 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-phone">Phone number</label>
                                 <div className="input-wrap validation">
-                                    <input type="tel" value="07510058684" name="meta[registration-phone]"
-                                        id="reg-phone" placeholder="Enter Your UK Phone Number"/>
+                                    <input type="text" value={postData?.registration_phone} name="registration_phone"
+                                        id="reg-phone" placeholder="Enter Your UK Phone Number" onChange={ handleChange }/>
                                 </div>
                             </div>
                             <div className="line flex">
                                 <label for="reg-day-birth">Date of Birth</label>
                                 <div className="date reg-birth">
-                                    <div className="input-wrap validation">
-                                        <select name="meta[day-birth]" id="reg-day-birth">
-                                        <option value="">Day</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                        <option value="">Day</option>
-                                            <option value="">Day</option>
-                                            <option value="">Day</option>
-                                            
-                                        </select>
-                                    </div>
-                                    <div className="input-wrap validation">
-                                        <select name="meta[month-birth]">
-                                            <option value="">Month</option>
-                                            <option value="January">January</option>
-                                        </select>
-                                    </div>
-                                    <div className="input-wrap validation">
-                                        <select name="meta[year-birth]">
+                                <div className="input-wrap validation">
+                                        <select name="year_birth" value={postData?.year_birth} onChange={ handleChange }>
                                             <option value="">Year</option>
+                                            {getBirthYearsArray().map((item)=><option value={item}>{item}</option>)}
                                         </select>
                                     </div>
+                                    <div className="input-wrap validation">
+                                        <select name="month_birth" value={postData?.month_birth} id="reg-day-birth" onChange={ handleChange }>
+                                        <option value="">Month</option>
+                                        {getMonthsArray().map((item)=><option value={item}>{item}</option>)}                                           
+                                        </select>
+                                    </div>
+                                    <div className="input-wrap validation">
+                                        <select name="day_birth" value={postData?.day_birth} onChange={ handleChange }>
+                                            <option value="">Day</option>
+                                            {birthDaysArray.map((item)=><option value={item}>{item}</option>)}
+                                        </select>
+                                    </div>
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                             <div className="line flex">
                                 <label for="reg-gender">Gender</label>
                                 <div className="input-wrap validation">
-                                    <select name="gender" id="reg-gender" value={userDetails?.gender}>
+                                    <select name="gender" id="reg-gender" value={postData?.gender} onChange={ handleChange }>
                                     <option value="">Select</option>
                                     {genders.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -160,7 +266,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-orientation">Orientation</label>
                                 <div className="input-wrap validation">
-                                    <select name="orientation" id="reg-orientation" value={userDetails?.orientation}>
+                                    <select name="orientation" id="reg-orientation" value={postData?.orientation} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {orientations.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -169,7 +275,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-ethnicity">Ethnicity</label>
                                 <div className="input-wrap validation">
-                                    <select name="ethnicity" id="reg-ethnicity" value={userDetails?.ethnicity}>
+                                    <select name="ethnicity" id="reg-ethnicity" value={postData?.ethnicity} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {ethnicities.map((item)=><option value={item}>{item}</option>)}
                                         
@@ -179,7 +285,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-nationality">Nationality</label>
                                 <div className="input-wrap validation">
-                                    <select name="nationality" id="reg-nationality" value={userDetails?.nationality}>
+                                    <select name="nationality" id="reg-nationality" value={postData?.nationality} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {nationalities.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -188,19 +294,19 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-height">Height</label>
                                 <div className="input-wrap validation height-input">
-                                    <input  type="text" name="height" id="reg-height" value={userDetails?.height}/>
+                                    <input  type="text" name="height" id="reg-height" value={postData?.height} onChange={ handleChange }/>
                                 </div>
                             </div>
                             <div className="line flex">
                                 <label for="reg-weight">Weight</label>
                                 <div className="input-wrap validation weight-input">
-                                    <input type="text" name="weight" id="reg-weight" value={userDetails?.weight}/>
+                                    <input type="text" name="weight" id="reg-weight" value={postData?.weight} onChange={ handleChange }/>
                                 </div>
                             </div>
                             <div className="line flex">
                                 <label for="reg-hair">Hair</label>
                                 <div className="input-wrap validation">
-                                    <select name="meta[hair]" id="reg-hair" value={userDetails?.hair}>
+                                    <select name="hair" id="reg-hair" value={postData?.hair} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {hairs.map((item)=><option value={item}>{item}</option>)}
                                         
@@ -210,35 +316,25 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-eyes">Eyes</label>
                                 <div className="input-wrap validation">
-                                    <select name="meta[eyes]" id="reg-eyes" value={userDetails?.eyes}>
+                                    <select name="eyes" id="reg-eyes" value={postData?.eyes} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {eyes.map((item)=><option value={item}>{item}</option>)}
 
                                     </select>
                                 </div>
                             </div>
+
                             <div className="line flex">
                                 <label>Breasts</label>
                                 <div className="register-breast">
                                     <div className="input-wrap validation">
-                                        <select name="breasts_size" value={userDetails?.breasts_size} aria-label="breast size">
-                                            <option value="">Size</option>
-                                            {breastsSizes.map((item)=><option value={item}>{item}</option>)}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="line flex">
-                                <label>Breasts</label>
-                                <div className="register-breast">
-                                    <div className="input-wrap validation">
-                                        <select name="breasts_size" value={userDetails?.breasts_size} aria-label="breast size">
+                                        <select name="breasts_size" value={postData?.breasts_size} onChange={ handleChange } aria-label="breast size">
                                             <option value="">Size</option>
                                             {breastsSizes.map((item)=><option value={item}>{item}</option>)}
                                         </select>
                                     </div>
                                     <div className="input-wrap validation">
-                                        <select name="breasts_cup" aria-label="breast cup size" value={userDetails?.breasts_cup}>
+                                        <select name="breasts_cup" aria-label="breast cup size" value={postData?.breasts_cup} onChange={ handleChange }>
                                             <option value="">Cup</option>
                                             {breastsCups.map((item)=><option value={item}>{item}</option>)}
                                         </select>
@@ -248,7 +344,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-butt">Butt</label>
                                 <div className="input-wrap validation">
-                                    <select name="butt" id="reg-butt" value={userDetails?.butt}>
+                                    <select name="butt" id="reg-butt" value={postData?.butt} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {butts.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -257,7 +353,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-body">Body</label>
                                 <div className="input-wrap validation">
-                                    <select name="body" id="reg-body" value={userDetails?.body}>
+                                    <select name="body" id="reg-body" value={postData?.body} onChange={ handleChange }> 
                                         <option value="">Select</option>
                                         {bodies.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -266,7 +362,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex">
                                 <label for="reg-cock-size">Cock Size</label>
                                 <div className="input-wrap validation">
-                                    <select name="meta[cock-size]" id="reg-cock-size" value={userDetails?.cock_size}>
+                                    <select name="cock_size" id="reg-cock-size" value={postData?.cock_size} onChange={ handleChange }>
                                         <option value="">Select</option>
                                         {cockSizes.map((item)=><option value={item}>{item}</option>)}
                                     </select>
@@ -275,10 +371,10 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="line flex al-top languages">
                                 <div className="label">Languages</div>
                                 <div className="input-wrap two-columns form-field__group validation">
-                                {languages.map((item)=>{
+                                {languagesArr.map((item)=>{
                                     return (
                                     <label style={{maringLeft:'10px'}}>
-                                        <input checked={userDetails?.languages?.split(",").includes(item)} type="checkbox" value={item} name="languages[]"/>
+                                        <input checked={postData?.languages?.split(",").includes(item)} type="checkbox" value={item} name="languages[]" onChange={handleChangeLanguage}/>
                                          <span> {item} </span>
                                     </label>)
                                 })}
@@ -293,11 +389,11 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <span>I offer:</span>
                                 <div className="input-wrap form-field__group two-columns validation">
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.rate_offer?.includes('Incall')} name='offer[]' value="Incall"/>
+                                        <input type="checkbox" checked={postData?.rate_offer?.includes('Incall')} name='offer[]' value="Incall" onChange={handleChangeRateOffer}/>
                                         <span>Incall</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.rate_offer?.includes('Outcall')} name='offer[]' value="Outcall"/>
+                                        <input type="checkbox" checked={postData?.rate_offer?.includes('Outcall')} name='offer[]' value="Outcall" onChange={handleChangeRateOffer}/>
                                         <span>Outcall</span>
                                     </label>
                                 </div>
@@ -307,33 +403,33 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <div className="input-wrap">
                                     <label>
                                         <strong>15 mins</strong>
-                                        <input type="number" value={userDetails?.incall_fee_15_min} name="incall_fee_15_min"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_15_min} name="incall_fee_15_min"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>30 mins</strong>
-                                        <input type="number" value={userDetails?.incall_fee_30_min} name="incall_fee_30_min"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_30_min} name="incall_fee_30_min"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>1 hour</strong>
-                                        <input type="number" value={userDetails?.incall_fee_1_hr} name="incall_fee_1_hr"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_1_hr} name="incall_fee_1_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>2 hours</strong>
-                                        <input type="number" value={userDetails?.incall_fee_2_hr} name="incall_fee_2_hr"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_2_hr} name="incall_fee_2_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>4 hours</strong>
-                                        <input type="number" value={userDetails?.incall_fee_4_hr} name="incall_fee_4_hr"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_4_hr} name="incall_fee_4_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>Overnight</strong>
-                                        <input type="number" value={userDetails?.incall_fee_overnight} name="incall_fee_overnight"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.incall_fee_overnight} name="incall_fee_overnight"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                 </div>
                             </div>
@@ -342,33 +438,33 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <div className="input-wrap">
                                     <label>
                                         <strong>15 mins</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_15_min}  name="outcall_fee_15_min"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.outcall_fee_15_min}  name="outcall_fee_15_min"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>30 mins</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_30_min}  name="outcall_fee_30_min"
-                                            className="fee_input" placeholder="£"/>
+                                        <input type="number" value={postData?.outcall_fee_30_min}  name="outcall_fee_30_min"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>1 hour</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_1_hr}  name="outcall_fee_1_hr"
-                                            className="fee_input" placeholder="£" />
+                                        <input type="number" value={postData?.outcall_fee_1_hr}  name="outcall_fee_1_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>2 hours</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_2_hr}  name="outcall_fee_2_hr"
-                                            className="fee_input" placeholder="£" />
+                                        <input type="number" value={postData?.outcall_fee_2_hr}  name="outcall_fee_2_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>4 hours</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_4_hr}  name="outcall_fee_4_hr"
-                                            className="fee_input" placeholder="£" />
+                                        <input type="number" value={postData?.outcall_fee_4_hr}  name="outcall_fee_4_hr"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                     <label>
                                         <strong>Overnight</strong>
-                                        <input type="number" value={userDetails?.outcall_fee_overnight}  name="outcall_fee_overnight"
-                                            className="fee_input" placeholder="£" />
+                                        <input type="number" value={postData?.outcall_fee_overnight}  name="outcall_fee_overnight"
+                                            className="fee_input" placeholder="£" onChange={ handleChange }/>
                                     </label>
                                 </div>
                             </div>
@@ -386,7 +482,7 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 {genderServices.map((item)=>{
                                     return (
                                     <label style={{maringLeft:'10px'}}>
-                                        <input checked={userDetails?.gender_service?.includes(item)} type="checkbox" value={item} name="languages[]"/>
+                                        <input checked={postData?.gender_service?.includes(item)} type="checkbox" value={item} onChange={handleChangeGenderService}/>
                                          <span> {item} </span>
                                     </label>)
                                 })}
@@ -562,15 +658,15 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <span>I use:</span>
                                 <div className="input-wrap form-field__group two-columns validation flex">
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('onlyfans')} name='used_ppv[]' value="onlyfans"/>
+                                        <input type="checkbox" checked={postData?.used_ppv?.includes('onlyfans')} value="onlyfans" onChange={handleChangeUsedPPV}/>
                                         <span>OnlyFans</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('manyvids')} name='used_ppv[]' value="manyvids"/>
+                                        <input type="checkbox" checked={postData?.used_ppv?.includes('manyvids')}  value="manyvids" onChange={handleChangeUsedPPV}/>
                                         <span>ManyVids</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('fancentro')} name='used_ppv[]' value="fancentro"/>
+                                        <input type="checkbox" checked={postData?.used_ppv?.includes('fancentro')}  value="fancentro" onChange={handleChangeUsedPPV}/>
                                         <span>FanCentro</span>
                                     </label>
                                 </div>
@@ -578,23 +674,23 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="form-field__fieldset">
                                 <div className="link-input__wrapper">
                                     <label>
-                                        <input type="text" value={userDetails?.onlyfans_link}
+                                        <input type="text" value={postData?.onlyfans_link}
                                             name="onlyfans_link" data-static
-                                            placeholder="www.onlyfans.com/"/>
+                                            placeholder="www.onlyfans.com/" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/onlyfans_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value={userDetails?.manyvids_link}
+                                        <input type="text" value={postData?.manyvids_link}
                                             name="manyvids_link" data-static
-                                            placeholder="www.manyvids.com/" />
+                                            placeholder="www.manyvids.com/" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/manyvids_sq.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value={userDetails?.fancentro_link}
+                                        <input type="text" value={postData?.fancentro_link}
                                             name="fancentro_link" data-static
-                                            placeholder="www.fancentro.com/" />
+                                            placeholder="www.fancentro.com/" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/fc_sq.png"
                                             alt=""/>
                                     </label>
@@ -609,21 +705,21 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                                 <span>I use:</span>
                                 <div className="input-wrap two-columns form-field__group validation flex">
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_social?.includes('twitter')} name='used_social[]' value="twitter"/>
+                                        <input type="checkbox" checked={postData?.used_social?.includes('twitter')}  value="twitter" onChange={handleChangeUsedSocial}/>
                                         <span>Twitter</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_social?.includes('snapchat')} name='used_social[]'
-                                            value="snapchat"/>
+                                        <input type="checkbox" checked={postData?.used_social?.includes('snapchat')} 
+                                            value="snapchat" onChange={handleChangeUsedSocial}/>
                                         <span>Snapchat</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_social?.includes('instagram')} name='used_social[]'
-                                            value="instagram"/>
+                                        <input type="checkbox" checked={postData?.used_social?.includes('instagram')} 
+                                            value="instagram" onChange={handleChangeUsedSocial}/>
                                         <span>Instagram</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked={userDetails?.used_social?.includes('tiktok')} name='used_social[]' value="tiktok"/>
+                                        <input type="checkbox" checked={postData?.used_social?.includes('tiktok')} name='used_social[]' value="tiktok" onChange={handleChangeUsedSocial}/>
                                         <span>TikTok</span>
                                     </label>
                                 </div>
@@ -631,34 +727,34 @@ const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
                             <div className="form-field__fieldset">
                                 <div className="link-input__wrapper">
                                     <label>
-                                        <input type="text" value={userDetails?.twitter_link_2}
-                                            name="twitter_link" data-static placeholder="www.twitter.com/"/>
+                                        <input type="text" value={postData?.twitter_link_2}
+                                            name="twitter_link" data-static placeholder="www.twitter.com/" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/twitter_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value={userDetails?.snapchat_link_2} name="snapchat_link"
-                                            placeholder="username"/>
+                                        <input type="text" value={postData?.snapchat_link_2} name="snapchat_link"
+                                            placeholder="username" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/snapchat_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value={userDetails?.instagram_link_2}
+                                        <input type="text" value={postData?.instagram_link_2}
                                             name="instagram_link" data-static
-                                            placeholder="www.instagram.com/"/>
+                                            placeholder="www.instagram.com/" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/instagram_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value={userDetails?.tiktok_link_2}
-                                            name="tiktok_link" data-static placeholder="www.tiktok.com/@"/>
+                                        <input type="text" value={postData?.tiktok_link_2}
+                                            name="tiktok_link" data-static placeholder="www.tiktok.com/@" onChange={handleChange}/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/tiktok.png"
                                             alt=""/>
                                     </label>
                                 </div>
                                 <div className="whatsup-input">
                                     <label>
-                                        <input checked={userDetails?.allow_whatsapp_contact} type="checkbox" name="allow_whatsapp_contact"/>
+                                        <input checked={postData?.allow_whatsapp_contact} type="checkbox" name="allow_whatsapp_contact"/>
                                         <span>Yes, allow users to contact me on whatsapp</span>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/whatsup_black.png"
                                             alt=""/>
