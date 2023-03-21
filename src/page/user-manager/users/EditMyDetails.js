@@ -7,8 +7,8 @@ const EditMyDetails=()=>{
     const dispatch = useDispatch()
 	const { userDetails,userDetailsProcessing } = useSelector((state) => state.users)
 	
-		useEffect(async() => {
-			await dispatch(getUserDetails()).then(()=>{
+		useEffect(() => {
+			 dispatch(getUserDetails()).then(()=>{
                 console.log('user details ',userDetails)
 			})
 		}, [])
@@ -40,6 +40,9 @@ const handleSubmit = event => {
  const bodies=['Athletic','Average','Curvaceous','Slim']
  const cockSizes=['3 in','4 in','5 in','6 in','7 in','8 in','9 in','10 in','11 in','12 in','13 in','Ask Me']
 const languages=['English','Spanish','Italian','German','Russian','French','Chinese','Portuguese','Other','Punjabi'];
+const genderServices=['Men','Women','MM','MF'];
+const extraServices=['Cum','CIM','DTF','Facial','Filming','Finger/Fisting (Giving)','Finger/Fisting (Receiving)','Foot worship','OWO','Prostate massage','PSE','Rimming (Giving)','Swallow','Watersports'];
+const socialMedia=['Twitter','Snapchat','Instagram','Tiktok']
 
  console.log('user details ',userDetails)
     
@@ -273,14 +276,10 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <div className="label">Languages</div>
                                 <div className="input-wrap two-columns form-field__group validation">
                                 {languages.map((item)=>{
-                                    return (<label>
-                                        {userDetails?.languages?.split(",").includes(item) ? (
-        <><input type="checkbox" checked value={item} name="languages[]"/>
-         <span> {item} </span></>
-      ) : (
-        <></>
-      )}
-                                        
+                                    return (
+                                    <label style={{maringLeft:'10px'}}>
+                                        <input checked={userDetails?.languages?.split(",").includes(item)} type="checkbox" value={item} name="languages[]"/>
+                                         <span> {item} </span>
                                     </label>)
                                 })}
                                 </div>
@@ -294,11 +293,11 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <span>I offer:</span>
                                 <div className="input-wrap form-field__group two-columns validation">
                                     <label>
-                                        <input type="checkbox" checked name='offer[]' value="Incall"/>
+                                        <input type="checkbox" checked={userDetails?.rate_offer?.includes('Incall')} name='offer[]' value="Incall"/>
                                         <span>Incall</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='offer[]' value="Outcall"/>
+                                        <input type="checkbox" checked={userDetails?.rate_offer?.includes('Outcall')} name='offer[]' value="Outcall"/>
                                         <span>Outcall</span>
                                     </label>
                                 </div>
@@ -308,32 +307,32 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <div className="input-wrap">
                                     <label>
                                         <strong>15 mins</strong>
-                                        <input type="number" value="4" name="incall_fee_15_min"
+                                        <input type="number" value={userDetails?.incall_fee_15_min} name="incall_fee_15_min"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>30 mins</strong>
-                                        <input type="number" value="3" name="incall_fee_30_min"
+                                        <input type="number" value={userDetails?.incall_fee_30_min} name="incall_fee_30_min"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>1 hour</strong>
-                                        <input type="number" value="3" name="incall_fee_1_hr"
+                                        <input type="number" value={userDetails?.incall_fee_1_hr} name="incall_fee_1_hr"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>2 hours</strong>
-                                        <input type="number" value="3" name="incall_fee_2_hr"
+                                        <input type="number" value={userDetails?.incall_fee_2_hr} name="incall_fee_2_hr"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>4 hours</strong>
-                                        <input type="number" value="2" name="incall_fee_4_hr"
+                                        <input type="number" value={userDetails?.incall_fee_4_hr} name="incall_fee_4_hr"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>Overnight</strong>
-                                        <input type="number" value="2" name="incall_fee_overnight"
+                                        <input type="number" value={userDetails?.incall_fee_overnight} name="incall_fee_overnight"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                 </div>
@@ -343,32 +342,32 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <div className="input-wrap">
                                     <label>
                                         <strong>15 mins</strong>
-                                        <input type="number" value="22" name="outcall_fee_15_min"
+                                        <input type="number" value={userDetails?.outcall_fee_15_min}  name="outcall_fee_15_min"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>30 mins</strong>
-                                        <input type="number" value="22" name="outcall_fee_30_min"
+                                        <input type="number" value={userDetails?.outcall_fee_30_min}  name="outcall_fee_30_min"
                                             className="fee_input" placeholder="£"/>
                                     </label>
                                     <label>
                                         <strong>1 hour</strong>
-                                        <input type="number" value="22" name="outcall_fee_1_hr"
+                                        <input type="number" value={userDetails?.outcall_fee_1_hr}  name="outcall_fee_1_hr"
                                             className="fee_input" placeholder="£" />
                                     </label>
                                     <label>
                                         <strong>2 hours</strong>
-                                        <input type="number" value="22" name="outcall_fee_2_hr"
+                                        <input type="number" value={userDetails?.outcall_fee_2_hr}  name="outcall_fee_2_hr"
                                             className="fee_input" placeholder="£" />
                                     </label>
                                     <label>
                                         <strong>4 hours</strong>
-                                        <input type="number" value="22" name="outcall_fee_4_hr"
+                                        <input type="number" value={userDetails?.outcall_fee_4_hr}  name="outcall_fee_4_hr"
                                             className="fee_input" placeholder="£" />
                                     </label>
                                     <label>
                                         <strong>Overnight</strong>
-                                        <input type="number" value="22" name="outcall_fee_overnight"
+                                        <input type="number" value={userDetails?.outcall_fee_overnight}  name="outcall_fee_overnight"
                                             className="fee_input" placeholder="£" />
                                     </label>
                                 </div>
@@ -383,22 +382,14 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                     <h4>I offer services to</h4>
                                 </div>
                                 <div className="input-wrap form-field__group two-columns validation">
-                                    <label>
-                                        <input checked type="checkbox" value="Men" name="gender[]"/>
-                                        <span>Men</span>
-                                    </label>
-                                    <label>
-                                        <input checked type="checkbox" value="Women" name="gender[]"/>
-                                        <span>Women</span>
-                                    </label>
-                                    <label>
-                                        <input checked type="checkbox" value="MM" name="gender[]"/>
-                                        <span>MM</span>
-                                    </label>
-                                    <label>
-                                        <input checked type="checkbox" value="MF" name="gender[]"/>
-                                        <span>MF</span>
-                                    </label>
+
+                                {genderServices.map((item)=>{
+                                    return (
+                                    <label style={{maringLeft:'10px'}}>
+                                        <input checked={userDetails?.gender_service?.includes(item)} type="checkbox" value={item} name="languages[]"/>
+                                         <span> {item} </span>
+                                    </label>)
+                                })}
                                 </div>
                             </div>
                             <div className="line">
@@ -571,15 +562,15 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <span>I use:</span>
                                 <div className="input-wrap form-field__group two-columns validation flex">
                                     <label>
-                                        <input type="checkbox" checked name='used_ppv[]' value="onlyfans"/>
+                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('onlyfans')} name='used_ppv[]' value="onlyfans"/>
                                         <span>OnlyFans</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='used_ppv[]' value="manyvids"/>
+                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('manyvids')} name='used_ppv[]' value="manyvids"/>
                                         <span>ManyVids</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='used_ppv[]' value="fancentro"/>
+                                        <input type="checkbox" checked={userDetails?.used_ppv?.includes('fancentro')} name='used_ppv[]' value="fancentro"/>
                                         <span>FanCentro</span>
                                     </label>
                                 </div>
@@ -587,21 +578,21 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                             <div className="form-field__fieldset">
                                 <div className="link-input__wrapper">
                                     <label>
-                                        <input type="text" value="www.onlyfans.com/www.asd@gmail.com"
+                                        <input type="text" value={userDetails?.onlyfans_link}
                                             name="onlyfans_link" data-static
                                             placeholder="www.onlyfans.com/"/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/onlyfans_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value="www.manyvids.com/www.asd@gmail.com"
+                                        <input type="text" value={userDetails?.manyvids_link}
                                             name="manyvids_link" data-static
                                             placeholder="www.manyvids.com/" />
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/manyvids_sq.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value="www.fancentro.com/www.asd@gmail.com"
+                                        <input type="text" value={userDetails?.fancentro_link}
                                             name="fancentro_link" data-static
                                             placeholder="www.fancentro.com/" />
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/fc_sq.png"
@@ -618,21 +609,21 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 <span>I use:</span>
                                 <div className="input-wrap two-columns form-field__group validation flex">
                                     <label>
-                                        <input type="checkbox" checked name='used_social[]' value="twitter"/>
+                                        <input type="checkbox" checked={userDetails?.used_social?.includes('twitter')} name='used_social[]' value="twitter"/>
                                         <span>Twitter</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='used_social[]'
+                                        <input type="checkbox" checked={userDetails?.used_social?.includes('snapchat')} name='used_social[]'
                                             value="snapchat"/>
                                         <span>Snapchat</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='used_social[]'
+                                        <input type="checkbox" checked={userDetails?.used_social?.includes('instagram')} name='used_social[]'
                                             value="instagram"/>
                                         <span>Instagram</span>
                                     </label>
                                     <label>
-                                        <input type="checkbox" checked name='used_social[]' value="tiktok"/>
+                                        <input type="checkbox" checked={userDetails?.used_social?.includes('tiktok')} name='used_social[]' value="tiktok"/>
                                         <span>TikTok</span>
                                     </label>
                                 </div>
@@ -640,26 +631,26 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                             <div className="form-field__fieldset">
                                 <div className="link-input__wrapper">
                                     <label>
-                                        <input type="text" value="www.twitter.com/awww.asd@gmail.com"
+                                        <input type="text" value={userDetails?.twitter_link_2}
                                             name="twitter_link" data-static placeholder="www.twitter.com/"/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/twitter_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value="www.asd@gmail.com" name="snapchat_link"
+                                        <input type="text" value={userDetails?.snapchat_link_2} name="snapchat_link"
                                             placeholder="username"/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/snapchat_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value="www.instagram.com/www.asd@gmail.com"
+                                        <input type="text" value={userDetails?.instagram_link_2}
                                             name="instagram_link" data-static
                                             placeholder="www.instagram.com/"/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/instagram_black.png"
                                             alt=""/>
                                     </label>
                                     <label>
-                                        <input type="text" value="www.tiktok.com/@www.asd@gmail.com"
+                                        <input type="text" value={userDetails?.tiktok_link_2}
                                             name="tiktok_link" data-static placeholder="www.tiktok.com/@"/>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/tiktok.png"
                                             alt=""/>
@@ -667,7 +658,7 @@ const languages=['English','Spanish','Italian','German','Russian','French','Chin
                                 </div>
                                 <div className="whatsup-input">
                                     <label>
-                                        <input checked type="checkbox" name="allow_whatsapp_contact"/>
+                                        <input checked={userDetails?.allow_whatsapp_contact} type="checkbox" name="allow_whatsapp_contact"/>
                                         <span>Yes, allow users to contact me on whatsapp</span>
                                         <img src="//transbunnies.com/wp-content/themes/transbunnies/img/whatsup_black.png"
                                             alt=""/>
