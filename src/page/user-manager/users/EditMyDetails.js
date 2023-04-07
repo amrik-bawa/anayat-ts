@@ -19,6 +19,7 @@ const EditMyDetails = () => {
         dispatch(getLocationsList())
     }, [])
 
+    console.warn('userDetails',userDetails)
 
     //--extract regions from locations list
     useEffect(() => {

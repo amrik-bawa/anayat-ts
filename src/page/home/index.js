@@ -18,6 +18,7 @@ import Msg from "../../assets/images/msg.svg";
 import RemindersWidget from '../reminders/RemindersWidget';
 
 const Home=()=>{
+    console.log(' on home page')
     return <div className="px-1 py-2">
     <Row className="">
         <Col lg="6" >

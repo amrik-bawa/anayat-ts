@@ -1,7 +1,11 @@
 
 .form_inner{
   border:2px solid blue;
+  width : 70%;
 
+}
+.my-details__section{
+  border:2px solid orange;
 }
 .dashboard-grid {
   display: flex;

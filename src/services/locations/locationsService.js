@@ -5,7 +5,7 @@ import { getRequest } from '../axios';
 class locationsService {
 
     getList = async (urlParam={},payload) =>{
-       return await getRequest('dashboard/locations?dsfasd=sdf',urlParam);
+       return await getRequest('dashboard/locations?name=amdlf&dsfasd=sdf',urlParam);
         }
 
 }
