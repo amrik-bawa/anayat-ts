@@ -17,6 +17,26 @@ export const getUserDetails = (urlParams) => async (dispatch) => {
 };
 
 
+export const updateUserDetails = (payload) => async (dispatch) => {
+	// dispatch(setUserDetailsProcessing(true));
+    console.log('payload on slice',payload)
+	return usersService
+		.updateDetails(payload)
+		.then( (res) => {
+            console.log('on submit res',res)
+            // dispatch(userDetailsSuccess(res?.data));
+            // return dispatch(setUserDetailsProcessing(false));
+			
+		})
+		.catch((error) => {
+            console.log('on submit error',error)
+            // console.log(error.message)
+			// dispatch(setUserDetailsProcessing(false));
+			// return dispatch(userDetailsError(error.message));
+		});
+};
+
+
 
 const initialState = {
     userDetails: [],

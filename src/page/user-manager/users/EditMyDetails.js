@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationsList, locationsListError } from "../../../store/locations/locationsSlice";
-import { getUserDetails } from "../../../store/user-manager/users/usersSlice";
+import { getUserDetails,updateUserDetails } from "../../../store/user-manager/users/usersSlice";
 import { getMonthsArray, getDaysInMonth, getBirthYearsArray } from "../../../Utils";
+import usersService from "../../../services/user-manager/users";
 const EditMyDetails = () => {
     // const [showBirthDay,setShowBirthDay]=useState(false)
     const [birthDaysArray, setBirthDaysArray] = useState([])
@@ -19,7 +20,6 @@ const EditMyDetails = () => {
         dispatch(getLocationsList())
     }, [])
 
-    console.warn('userDetails',userDetails)
 
     //--extract regions from locations list
     useEffect(() => {
@@ -60,16 +60,6 @@ const EditMyDetails = () => {
         }
     }, [postData?.ad_lvl_0, postData?.ad_lvl_1])
 
-    //--/--/handle location Regions/Coutries/Cities---
-
-
-
-
-    //    handleChange(fieldName , value)
-    //    setPostData((prevState)=>{
-    //    { ...prevState,{[fieldName] : value}}
-    //    )
-
 
     const handleChange = evt => {
         const name = evt.target.name;
@@ -79,23 +69,79 @@ const EditMyDetails = () => {
             [name]: value
         })
     }
+    const handleOtherChange = evt => {
+        const name = evt.target.name;
+        const value = evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
+        setPostData({
+            ...postData,
+            other_info: {
+                ...postData.other_info,
+                [name]: value
+            }
+        })
+    }
+
+    console.log(postData?.other_info)
 
     const handleChangeLanguage = (e) => {
         const { value, checked } = e.target;
-        const PDlanguages = postData.languages.split(',');
+        const PDlanguages = postData.other_info.languages.split(',');
         if (checked) {
             setPostData({
                 ...postData,
-                languages: [...PDlanguages, value].toString()
+                other_info: {
+                    ...postData.other_info,
+                    languages:[...PDlanguages, value].toString()
+                }
             })
         }
         else {
             const removedLang = PDlanguages.filter((e) => e !== value);
             setPostData({
                 ...postData,
-                languages: removedLang.toString()
+                other_info: {
+                    ...postData.other_info,
+                    languages: removedLang.toString()
+                }
+                
             })
         }
+    };
+
+    const handleExtraServiceCheck = (e) => {
+        const { value, checked } = e.target;
+        
+        const oldPostData = {...postData};
+        const extraServicesOld = oldPostData.extra_services;
+
+        // let postDataClone = postData;
+        // let extra_services =postDataClone.extra_services
+        // console.log('exttttttttt',extra_services)
+        let clickeIndex = extraServicesOld.findIndex(x => x.name ===value)
+        alert(clickeIndex)
+        let newExtraServices=[];
+        if (checked) {
+            extraServicesOld[value]={name:value,field:'ok',price:14}
+            setPostData({
+                ...postData,
+                extra_services: extraServicesOld
+            })
+        }
+        else {
+        //    let extra_services2=extra_services.splice(clickeIndex,1)
+            // const removedLang = PDlanguages.filter((e) => e !== value);
+            
+            const newExtraServices = extraServicesOld.filter((item ,index) => {
+                 return index != clickeIndex 
+            })
+            console.log('newextraServicesOldnewextraServicesOld', newExtraServices)
+            setPostData({
+                ...postData,
+                extra_services: newExtraServices
+            })
+        }
+
+        
     };
 
 
@@ -123,17 +169,23 @@ const EditMyDetails = () => {
 
     const handleChangeRateOffer = (e) => {
         const { value, checked } = e.target;
-        const rateOffers = postData.rate_offer;
+        const rateOffers = postData.other_info.rate_offer;
         if (checked) {
             setPostData({
                 ...postData,
-                rate_offer: [...rateOffers, value]
+                other_info: {
+                    ...postData.other_info,
+                    rate_offer: [...rateOffers, value]
+                }
             })
         }
         else {
             setPostData({
                 ...postData,
-                rate_offer: rateOffers.filter((e) => e !== value)
+                other_info: {
+                    ...postData.other_info,
+                    rate_offer: rateOffers.filter((e) => e !== value)
+                }
             })
         }
     };
@@ -173,12 +225,14 @@ const EditMyDetails = () => {
     };
 
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        const myFormData = new FormData(event.target);
-        const formDataObj = {};
-        myFormData.forEach((value, key) => (formDataObj[key] = value));
-        console.log('payload data', formDataObj)
+    const handleSubmit =() => {
+console.log('payload is ',postData)
+    dispatch(updateUserDetails(postData))        
+        // event.preventDefault();
+        // const myFormData = new FormData(event.target);
+        // const formDataObj = {};
+        // myFormData.forEach((value, key) => (formDataObj[key] = value));
+        // console.log('payload data', formDataObj)
     }
     const dates = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15]
     const months = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
@@ -189,14 +243,14 @@ const EditMyDetails = () => {
     const nationalities = ['Asian', 'African/Caribbean', 'Caucasian', 'Indian', 'Latina/o', 'Mixed', 'Other']
     const hairs = ['Auburn', 'Black', 'Blonde', 'Red', 'Other']
     const eyes = ['Blue', 'Brown', 'Green', 'Grey', 'Hazel']
-    const breastsCups = ['Blue', 'Brown', 'Green', 'Grey', 'Hazel']
-    const breastsSizes = ['A', 'B', 'C', 'D', 'DD', 'E', 'F', 'G', 'H']
+    const breastsSizes = ['Blue', 'Brown', 'Green', 'Grey', 'Hazel']
+    const breastsCups = ['A', 'B', 'C', 'D', 'DD', 'E', 'F', 'G', 'H']
     const butts = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
     const bodies = ['Athletic', 'Average', 'Curvaceous', 'Slim']
     const cockSizes = ['3 in', '4 in', '5 in', '6 in', '7 in', '8 in', '9 in', '10 in', '11 in', '12 in', '13 in', 'Ask Me']
     const languagesArr = ['English', 'Spanish', 'Italian', 'German', 'Russian', 'French', 'Chinese', 'Portuguese', 'Other'];
     const genderServices = ['Men', 'Women', 'MM', 'MF'];
-    const extraServices = ['Cum', 'CIM', 'DTF', 'Facial', 'Filming', 'Finger/Fisting (Giving)', 'Finger/Fisting (Receiving)', 'Foot worship', 'OWO', 'Prostate massage', 'PSE', 'Rimming (Giving)', 'Swallow', 'Watersports'];
+    const extraServices = ['Test Blank','Cum', 'CIM', 'DTF', 'Facial', 'Filming', 'Finger/Fisting (Giving)', 'Finger/Fisting (Receiving)', 'Foot worship', 'OWO', 'Prostate massage', 'PSE', 'Rimming (Giving)', 'Swallow', 'Watersports'];
     const socialMedia = ['Twitter', 'Snapchat', 'Instagram', 'Tiktok']
 
     return <div className="my-details__section">
@@ -269,19 +323,19 @@ const EditMyDetails = () => {
                                     <label for="reg-day-birth">Date of Birth</label>
                                     <div className="date reg-birth">
                                         <div className="input-wrap validation">
-                                            <select name="year_birth" value={postData?.year_birth} onChange={handleChange}>
+                                            <select name="year_birth" value={postData?.other_info?.year_birth} onChange={handleOtherChange}>
                                                 <option value="">Year</option>
                                                 {getBirthYearsArray().map((item) => <option value={item}>{item}</option>)}
                                             </select>
                                         </div>
                                         <div className="input-wrap validation">
-                                            <select name="month_birth" value={postData?.month_birth} id="reg-day-birth" onChange={handleChange}>
+                                            <select name="month_birth" value={postData?.other_info?.month_birth} id="reg-day-birth" onChange={handleOtherChange}>
                                                 <option value="">Month</option>
                                                 {getMonthsArray().map((item) => <option value={item}>{item}</option>)}
                                             </select>
                                         </div>
                                         <div className="input-wrap validation">
-                                            <select name="day_birth" value={postData?.day_birth} onChange={handleChange}>
+                                            <select name="day_birth" value={postData?.other_info?.day_birth} onChange={handleOtherChange}>
                                                 <option value="">Day</option>
                                                 {birthDaysArray.map((item) => <option value={item}>{item}</option>)}
                                             </select>
@@ -294,7 +348,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-gender">Gender</label>
                                     <div className="input-wrap validation">
-                                        <select name="gender" id="reg-gender" value={postData?.gender} onChange={handleChange}>
+                                        <select name="gender" id="reg-gender" value={postData?.other_info?.gender} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {genders.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -303,7 +357,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-orientation">Orientation</label>
                                     <div className="input-wrap validation">
-                                        <select name="orientation" id="reg-orientation" value={postData?.orientation} onChange={handleChange}>
+                                        <select name="orientation" id="reg-orientation" value={postData?.other_info?.orientation} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {orientations.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -312,7 +366,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-ethnicity">Ethnicity</label>
                                     <div className="input-wrap validation">
-                                        <select name="ethnicity" id="reg-ethnicity" value={postData?.ethnicity} onChange={handleChange}>
+                                        <select name="ethnicity" id="reg-ethnicity" value={postData?.other_info?.ethnicity} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {ethnicities.map((item) => <option value={item}>{item}</option>)}
 
@@ -322,7 +376,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-nationality">Nationality</label>
                                     <div className="input-wrap validation">
-                                        <select name="nationality" id="reg-nationality" value={postData?.nationality} onChange={handleChange}>
+                                        <select name="nationality" id="reg-nationality" value={postData?.other_info?.nationality} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {nationalities.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -331,19 +385,19 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-height">Height</label>
                                     <div className="input-wrap validation height-input">
-                                        <input type="text" name="height" id="reg-height" value={postData?.height} onChange={handleChange} />
+                                        <input type="text" name="height" id="reg-height" value={postData?.other_info?.height} onChange={handleOtherChange} />
                                     </div>
                                 </div>
                                 <div className="line flex">
                                     <label for="reg-weight">Weight</label>
                                     <div className="input-wrap validation weight-input">
-                                        <input type="text" name="weight" id="reg-weight" value={postData?.weight} onChange={handleChange} />
+                                        <input type="text" name="weight" id="reg-weight" value={postData?.other_info?.weight} onChange={handleOtherChange} />
                                     </div>
                                 </div>
                                 <div className="line flex">
                                     <label for="reg-hair">Hair</label>
                                     <div className="input-wrap validation">
-                                        <select name="hair" id="reg-hair" value={postData?.hair} onChange={handleChange}>
+                                        <select name="hair" id="reg-hair" value={postData?.other_info?.hair} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {hairs.map((item) => <option value={item}>{item}</option>)}
 
@@ -353,7 +407,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-eyes">Eyes</label>
                                     <div className="input-wrap validation">
-                                        <select name="eyes" id="reg-eyes" value={postData?.eyes} onChange={handleChange}>
+                                        <select name="eyes" id="reg-eyes" value={postData?.other_info?.eyes} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {eyes.map((item) => <option value={item}>{item}</option>)}
 
@@ -365,13 +419,13 @@ const EditMyDetails = () => {
                                     <label>Breasts</label>
                                     <div className="register-breast">
                                         <div className="input-wrap validation">
-                                            <select name="breasts_size" value={postData?.breasts_size} onChange={handleChange} aria-label="breast size">
+                                            <select name="breasts_size" value={postData?.other_info?.breasts_size} onChange={handleOtherChange} aria-label="breast size">
                                                 <option value="">Size</option>
                                                 {breastsSizes.map((item) => <option value={item}>{item}</option>)}
                                             </select>
                                         </div>
                                         <div className="input-wrap validation">
-                                            <select name="breasts_cup" aria-label="breast cup size" value={postData?.breasts_cup} onChange={handleChange}>
+                                            <select name="breasts_cup" aria-label="breast cup size" value={postData?.other_info?.breasts_cup} onChange={handleOtherChange}>
                                                 <option value="">Cup</option>
                                                 {breastsCups.map((item) => <option value={item}>{item}</option>)}
                                             </select>
@@ -381,7 +435,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-butt">Butt</label>
                                     <div className="input-wrap validation">
-                                        <select name="butt" id="reg-butt" value={postData?.butt} onChange={handleChange}>
+                                        <select name="butt" id="reg-butt" value={postData?.other_info?.butt} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {butts.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -390,7 +444,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-body">Body</label>
                                     <div className="input-wrap validation">
-                                        <select name="body" id="reg-body" value={postData?.body} onChange={handleChange}>
+                                        <select name="body" id="reg-body" value={postData?.other_info?.body} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {bodies.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -399,7 +453,7 @@ const EditMyDetails = () => {
                                 <div className="line flex">
                                     <label for="reg-cock-size">Cock Size</label>
                                     <div className="input-wrap validation">
-                                        <select name="cock_size" id="reg-cock-size" value={postData?.cock_size} onChange={handleChange}>
+                                        <select name="cock_size" id="reg-cock-size" value={postData?.other_info?.cock_size} onChange={handleOtherChange}>
                                             <option value="">Select</option>
                                             {cockSizes.map((item) => <option value={item}>{item}</option>)}
                                         </select>
@@ -411,7 +465,7 @@ const EditMyDetails = () => {
                                         {languagesArr.map((item) => {
                                             return (
                                                 <label style={{ maringLeft: '10px' }}>
-                                                    <input checked={postData?.languages?.split(",").includes(item)} type="checkbox" value={item} name="languages[]" onChange={handleChangeLanguage} />
+                                                    <input checked={postData?.other_info?.languages?.split(",").includes(item)} type="checkbox" value={item} name="languages[]" onChange={handleChangeLanguage} />
                                                     <span> {item} </span>
                                                 </label>)
                                         })}
@@ -426,11 +480,11 @@ const EditMyDetails = () => {
                                     <span>I offer:</span>
                                     <div className="input-wrap form-field__group two-columns validation">
                                         <label>
-                                            <input type="checkbox" checked={postData?.rate_offer?.includes('Incall')} name='offer[]' value="Incall" onChange={handleChangeRateOffer} />
+                                            <input type="checkbox" checked={postData?.other_info?.rate_offer?.includes('Incall')} name='offer[]' value="Incall" onChange={handleChangeRateOffer} />
                                             <span>Incall</span>
                                         </label>
                                         <label>
-                                            <input type="checkbox" checked={postData?.rate_offer?.includes('Outcall')} name='offer[]' value="Outcall" onChange={handleChangeRateOffer} />
+                                            <input type="checkbox" checked={postData?.other_info?.rate_offer?.includes('Outcall')} name='offer[]' value="Outcall" onChange={handleChangeRateOffer} />
                                             <span>Outcall</span>
                                         </label>
                                     </div>
@@ -440,33 +494,33 @@ const EditMyDetails = () => {
                                     <div className="input-wrap">
                                         <label>
                                             <strong>15 mins</strong>
-                                            <input type="number" value={postData?.incall_fee_15_min} name="incall_fee_15_min"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_15_min} name="incall_fee_15_min"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>30 mins</strong>
-                                            <input type="number" value={postData?.incall_fee_30_min} name="incall_fee_30_min"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_30_min} name="incall_fee_30_min"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>1 hour</strong>
-                                            <input type="number" value={postData?.incall_fee_1_hr} name="incall_fee_1_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_1_hr} name="incall_fee_1_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>2 hours</strong>
-                                            <input type="number" value={postData?.incall_fee_2_hr} name="incall_fee_2_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_2_hr} name="incall_fee_2_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>4 hours</strong>
-                                            <input type="number" value={postData?.incall_fee_4_hr} name="incall_fee_4_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_4_hr} name="incall_fee_4_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>Overnight</strong>
-                                            <input type="number" value={postData?.incall_fee_overnight} name="incall_fee_overnight"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.incall_fee_overnight} name="incall_fee_overnight"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                     </div>
                                 </div>
@@ -475,33 +529,33 @@ const EditMyDetails = () => {
                                     <div className="input-wrap">
                                         <label>
                                             <strong>15 mins</strong>
-                                            <input type="number" value={postData?.outcall_fee_15_min} name="outcall_fee_15_min"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_15_min} name="outcall_fee_15_min"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>30 mins</strong>
-                                            <input type="number" value={postData?.outcall_fee_30_min} name="outcall_fee_30_min"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_30_min} name="outcall_fee_30_min"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>1 hour</strong>
-                                            <input type="number" value={postData?.outcall_fee_1_hr} name="outcall_fee_1_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_1_hr} name="outcall_fee_1_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>2 hours</strong>
-                                            <input type="number" value={postData?.outcall_fee_2_hr} name="outcall_fee_2_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_2_hr} name="outcall_fee_2_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>4 hours</strong>
-                                            <input type="number" value={postData?.outcall_fee_4_hr} name="outcall_fee_4_hr"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_4_hr} name="outcall_fee_4_hr"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                         <label>
                                             <strong>Overnight</strong>
-                                            <input type="number" value={postData?.outcall_fee_overnight} name="outcall_fee_overnight"
-                                                className="fee_input" placeholder="£" onChange={handleChange} />
+                                            <input type="number" value={postData?.other_info?.outcall_fee_overnight} name="outcall_fee_overnight"
+                                                className="fee_input" placeholder="£" onChange={handleOtherChange} />
                                         </label>
                                     </div>
                                 </div>
@@ -530,6 +584,8 @@ const EditMyDetails = () => {
                                         <h4>Extra Services</h4>
                                     </div>
                                     <div className="input-wrap form-field__group validation">
+                                    
+
                                         <div className="label-wrapper">
                                             <label>
                                                 <input type="checkbox" className="select-all-services" />
@@ -537,17 +593,37 @@ const EditMyDetails = () => {
                                             </label>
                                             <span className="extra-fee-title">Extra fee (£)</span>
                                         </div>
-                                        <div className="label-wrapper">
-                                            <label>
-                                                <input type="checkbox" checked value="Cum" name="service[]" />
-                                                <span>Cum</span>
-                                            </label>
-                                            <label className="num_input">
-                                                <input value="11" type="text" className="fee_input"
-                                                    name="service_fee[Cum]" placeholder="£" />
-                                            </label>
-                                        </div>
-                                        <div className="label-wrapper">
+
+                                        {(()=>{
+                                            let savedServices=postData?.extra_services;
+                                            let savedServicesKeyObj=[];
+                                            if(savedServices){
+                                                Object.keys(savedServices)?.map(val => 
+                                                    savedServicesKeyObj[savedServices[val].name]=savedServices[val]
+                                                
+                                                )
+                                            }
+                                            
+
+                                            
+                                          return  extraServices.map((item) => {
+                                                return <div className="label-wrapper">
+                                                <label>
+                                                    <input type="checkbox" checked={(item in savedServicesKeyObj)} value={item} onChange={handleExtraServiceCheck} />
+                                                    <span>{item}</span>
+                                                </label>
+                                                <label className="num_input">
+                                                    <input style={{width:'80px'}} value={savedServicesKeyObj[item]?.price} type="text" className="fee_input"
+                                                    placeholder="£" />
+                                                </label>
+                                            </div>
+                                            })
+                                        })()
+                                            
+                                        
+                                        }
+                                        
+                                        {/* <div className="label-wrapper">
                                             <label>
                                                 <input type="checkbox" checked value="CIM" name="service[]" />
                                                 <span>CIM</span>
@@ -683,7 +759,7 @@ const EditMyDetails = () => {
                                                 <input value="11" type="text" className="fee_input"
                                                     name="service_fee[Watersports]" placeholder="£" />
                                             </label>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -817,7 +893,7 @@ const EditMyDetails = () => {
                     </div>
                     <div className="finish-btns">
 
-                        <button className="button" data-user-verified="1" type="submit"
+                        <button onClick={handleSubmit} className="button" data-user-verified="1" type="button"
                             data-txt-submit="Save Changes" data-txt-saved="Saved">Save Changes</button>
                         <div className="white-text-popup fancybox-content" id="info-content" >
                             <div className="text">

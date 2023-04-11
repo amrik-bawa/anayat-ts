@@ -13,7 +13,7 @@ axiosClient.defaults.headers = {
 //All request will wait 2 seconds before timeout
 axiosClient.defaults.timeout = 10000;
 
-axiosClient.defaults.withCredentials = true;
+axiosClient.defaults.withCredentials = false;
 
 
 export function getRequest(URL,urlParam) {
