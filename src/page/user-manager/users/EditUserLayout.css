@@ -1,11 +1,11 @@
 
 .form_inner{
-  border:2px solid blue;
+  /* border:2px solid blue; */
   width : 70%;
 
 }
 .my-details__section{
-  border:2px solid orange;
+  /* border:2px solid orange; */
 }
 .dashboard-grid {
   display: flex;
@@ -14,15 +14,15 @@
   max-height: 1620px;
   column-gap: 10px;
   row-gap: 20px;
-  border:3px solid yellow;
+  /* border:3px solid yellow; */
   width: 100%;
 }
 .dashboard-grid>div{
-  border:2px solid purple !important;
+  /* border:2px solid purple !important; */
   width: 30% !important;
 }
 .dashboard-grid .my-personal-details{
-  border:2px solid red
+  /* border:2px solid red */
 }
 @media (max-width: 1260px) {
   .dashboard-grid {

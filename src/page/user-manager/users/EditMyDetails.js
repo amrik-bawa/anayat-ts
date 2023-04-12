@@ -81,7 +81,6 @@ const EditMyDetails = () => {
         })
     }
 
-    console.log('extra data',postData?.extra_services)
 
     const handleChangeLanguage = (e) => {
         const { value, checked } = e.target;
@@ -263,13 +262,7 @@ const EditMyDetails = () => {
 
 
     const handleSubmit =() => {
-console.log('payload is ',postData)
     dispatch(updateUserDetails(postData))        
-        // event.preventDefault();
-        // const myFormData = new FormData(event.target);
-        // const formDataObj = {};
-        // myFormData.forEach((value, key) => (formDataObj[key] = value));
-        // console.log('payload data', formDataObj)
     }
     const dates = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15]
     const months = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
