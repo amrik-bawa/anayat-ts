@@ -27,8 +27,8 @@ export function getRequest(URL,urlParam) {
   )
 }
 
-export async function  postRequest(URL, payload) {
-  return await axiosClient.post(`/${URL}`, payload).then(response => response);
+export async function  postRequest(URL, payload,otherData) {
+  return await axiosClient.post(`/${URL}`, payload,otherData).then(response => response);
 }
 
 export function patchRequest(URL, payload) {

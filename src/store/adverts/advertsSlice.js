@@ -34,6 +34,24 @@ export const getAdvertsLocations = (urlParams) => async (dispatch) => {
 };
 
 
+export const updateAdvertsLocations = (payload,otherData) => async (dispatch) => {
+	dispatch(setloadingStatus(true));
+	return advertService
+		.updateLocations(payload,otherData)
+		.then( (res) => {
+            // dispatch(getAdvertsLocations({}))
+            return res;
+		})
+		.catch((error) => {
+            return error
+            console.log('errro',error)
+            // console.log(error.message)
+			// dispatch(setloadingStatus(false));
+			// return dispatch(locationsListError(error.message));
+		});
+};
+
+
 
 const initialState = {
     liveAdvertsList: [],

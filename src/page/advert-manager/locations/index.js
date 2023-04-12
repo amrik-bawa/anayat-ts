@@ -37,18 +37,19 @@ const Locations = () => {
 	useEffect(() => {
 		dispatch(getAdvertsLocations())
 		console.log(advertsLocationsList)
-	}, [dispatch])
+	}, [])
 
 	const handleEditing=(_key)=>{
 		setSelectedKey(_key);
 		handleOpen();
 	}
+	console.log('adverts list',advertsLocationsList)
 	let keyid = 0;
 	return <>
 		<div className="recent-signup">
 		<Modal open={open}    onClose={handleClose}     aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
-			<EditTsOfTheWeek dafault_spaces={advertsLocationsList[selectedKey]?.default_spaces} advert_price={advertsLocationsList[selectedKey]?.price}/>
+			<EditTsOfTheWeek details={advertsLocationsList[selectedKey]} dafault_spaces={advertsLocationsList[selectedKey]?.default_spaces} advert_price={advertsLocationsList[selectedKey]?.price}/>
 		</Box>
 
       </Modal>
@@ -92,7 +93,7 @@ const Locations = () => {
 									{keys.map((item) => {
 										let row=advertsLocationsList[item];
 										return (<>
-											<tr>
+											<tr key={row.title}>
 												<td>{row.title}</td>
 												<td>{row.current_adverts}</td>
 												<td>{row.available_spaces}</td>
