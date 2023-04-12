@@ -81,7 +81,7 @@ const EditMyDetails = () => {
         })
     }
 
-    console.log('extra data',postData?.extra_services)
+    console.log('post data is',postData)
 
     const handleChangeLanguage = (e) => {
         const { value, checked } = e.target;
@@ -108,47 +108,36 @@ const EditMyDetails = () => {
         }
     };
 
-    const handleExtraServicePriceChange=(e , fieldName)=>{
-        const currentTarget = e.currentTarget;
-        const value=currentTarget.value;
-        const extraServices=[];
-
-        setPostData({
-            ...postData,
-            extra_services: [...postData.extra_services.map(item => {
-                if(item.field!==fieldName){
-                    return item
-                }else{
-                    return {name:item.name,field:item.field,price:value}
-                }
-                
-              })]
-        })
-
-
-    }
-
     const handleExtraServiceCheck = (e) => {
-        const currentTarget = e.currentTarget;
-        const value=currentTarget.value;
-        const checked=currentTarget.checked;
-        let clickeIndex = postData.extra_services.findIndex(x => x.name ===value)
+        const { value, checked } = e.target;
+        
+        const oldPostData = {...postData};
+        const extraServicesOld = oldPostData.extra_services;
 
+        // let postDataClone = postData;
+        // let extra_services =postDataClone.extra_services
+        // console.log('exttttttttt',extra_services)
+        let clickeIndex = extraServicesOld.findIndex(x => x.name ===value)
+        alert(clickeIndex)
+        let newExtraServices=[];
         if (checked) {
+            extraServicesOld[value]={name:value,field:'ok',price:14}
             setPostData({
                 ...postData,
-                extra_services: [
-                    ...postData.extra_services,
-                    {name:value,field:`service_fee_`+value.replace(' ','').toLowerCase(),price:0}
-                ]
+                extra_services: extraServicesOld
             })
         }
         else {
+        //    let extra_services2=extra_services.splice(clickeIndex,1)
+            // const removedLang = PDlanguages.filter((e) => e !== value);
+            
+            const newExtraServices = extraServicesOld.filter((item ,index) => {
+                 return index != clickeIndex 
+            })
+            console.log('newextraServicesOldnewextraServicesOld', newExtraServices)
             setPostData({
                 ...postData,
-                extra_services: [
-                    ...postData.extra_services.filter((item ,index) => {return index != clickeIndex })
-                ]
+                extra_services: newExtraServices
             })
         }
 
@@ -163,25 +152,17 @@ const EditMyDetails = () => {
 
     const handleChangeGenderService = (e) => {
         const { value, checked } = e.target;
-        const genderService = postData?.other_info?.gender_service;
+        const gender_service = postData.gender_service;
         if (checked) {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    gender_service: [...genderService, value]
-                }
-                
+                gender_service: [...gender_service, value]
             })
         }
         else {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    gender_service: genderService.filter((e) => e !== value)
-                }
-                
+                gender_service: gender_service.filter((e) => e !== value)
             })
         }
     };
@@ -209,54 +190,36 @@ const EditMyDetails = () => {
         }
     };
 
-    
-
     const handleChangeUsedPPV = (e) => {
         const { value, checked } = e.target;
-        const usedPpv = postData?.other_info?.used_ppv;
+        const usedPpv = postData.used_ppv;
         if (checked) {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    used_ppv: [...usedPpv, value]
-                }
-                
+                used_ppv: [...usedPpv, value]
             })
         }
         else {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    used_ppv: usedPpv.filter((e) => e !== value)
-                }
-                
+                used_ppv: usedPpv.filter((e) => e !== value)
             })
         }
     };
 
     const handleChangeUsedSocial = (e) => {
         const { value, checked } = e.target;
-        const usedSocial = postData?.other_info?.used_social;
+        const usedSocial = postData.used_social;
         if (checked) {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    used_social: [...usedSocial, value]
-                }
-                
+                used_social: [...usedSocial, value]
             })
         }
         else {
             setPostData({
                 ...postData,
-                other_info: {
-                    ...postData.other_info,
-                    used_social: usedSocial.filter((e) => e !== value)
-                }
-                
+                used_social: usedSocial.filter((e) => e !== value)
             })
         }
     };
@@ -610,7 +573,7 @@ console.log('payload is ',postData)
                                         {genderServices.map((item) => {
                                             return (
                                                 <label style={{ maringLeft: '10px' }}>
-                                                    <input checked={postData?.other_info?.gender_service?.includes(item)} type="checkbox" value={item} onChange={handleChangeGenderService} />
+                                                    <input checked={postData?.gender_service?.includes(item)} type="checkbox" value={item} onChange={handleChangeGenderService} />
                                                     <span> {item} </span>
                                                 </label>)
                                         })}
@@ -630,8 +593,29 @@ console.log('payload is ',postData)
                                             </label>
                                             <span className="extra-fee-title">Extra fee (£)</span>
                                         </div>
-
                                         {(()=>{
+                                            let services=postData?.other_info?.services;
+                                            console.log('services',services);
+                                           return extraServices.map((serv)=>{
+                                                
+                                                let servCode=`service_fee_`+serv.toLowerCase().replace(' ','');
+                                                // console.log(serv,servCode)
+                                                console.log('price is',postData?.other_info[servCode])
+                                                return <div className="label-wrapper">
+                                                <label>
+                                                    <input type="checkbox" checked={services?.includes(serv)} value='' onChange={handleExtraServiceCheck} />
+                                                    <span>{serv}</span>
+                                                </label>
+                                                <label className="num_input">
+                                                    <input style={{width:'80px'}} value={postData?.other_info[servCode]} type="text" className="fee_input"
+                                                    placeholder="£" />
+                                                </label>
+                                            </div>
+
+                                            })
+                                        })()}
+
+                                        {/* {(()=>{
                                             let savedServices=postData?.extra_services;
                                             let savedServicesKeyObj=[];
                                             if(savedServices){
@@ -646,17 +630,21 @@ console.log('payload is ',postData)
                                           return  extraServices.map((item) => {
                                                 return <div className="label-wrapper">
                                                 <label>
-                                                    <input type="checkbox" checked={(item in savedServicesKeyObj)} value={item} field={savedServicesKeyObj[item]?.field} onChange={handleExtraServiceCheck} />
+                                                    <input type="checkbox" checked={(item in savedServicesKeyObj)} value={item} onChange={handleExtraServiceCheck} />
                                                     <span>{item}</span>
                                                 </label>
                                                 <label className="num_input">
-                                                    <input onChange={(e)=>{handleExtraServicePriceChange(e , savedServicesKeyObj[item]?.field)}} style={{width:'80px'}} value={savedServicesKeyObj[item]?.price} field={savedServicesKeyObj[item]?.field} type="text" className="fee_input"
+                                                    <input style={{width:'80px'}} value={savedServicesKeyObj[item]?.price} type="text" className="fee_input"
                                                     placeholder="£" />
                                                 </label>
                                             </div>
                                             })
                                         })()
-                                        }
+                                            
+                                        
+                                        } */}
+                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -668,15 +656,15 @@ console.log('payload is ',postData)
                                     <span>I use:</span>
                                     <div className="input-wrap form-field__group two-columns validation flex">
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_ppv?.includes('onlyfans')} value="onlyfans" onChange={handleChangeUsedPPV} />
+                                            <input type="checkbox" checked={postData?.used_ppv?.includes('onlyfans')} value="onlyfans" onChange={handleChangeUsedPPV} />
                                             <span>OnlyFans</span>
                                         </label>
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_ppv?.includes('manyvids')} value="manyvids" onChange={handleChangeUsedPPV} />
+                                            <input type="checkbox" checked={postData?.used_ppv?.includes('manyvids')} value="manyvids" onChange={handleChangeUsedPPV} />
                                             <span>ManyVids</span>
                                         </label>
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_ppv?.includes('fancentro')} value="fancentro" onChange={handleChangeUsedPPV} />
+                                            <input type="checkbox" checked={postData?.used_ppv?.includes('fancentro')} value="fancentro" onChange={handleChangeUsedPPV} />
                                             <span>FanCentro</span>
                                         </label>
                                     </div>
@@ -684,23 +672,23 @@ console.log('payload is ',postData)
                                 <div className="form-field__fieldset">
                                     <div className="link-input__wrapper">
                                         <label>
-                                            <input type="text" value={postData?.other_info?.onlyfans_link}
+                                            <input type="text" value={postData?.onlyfans_link}
                                                 name="onlyfans_link" data-static
-                                                placeholder="www.onlyfans.com/" onChange={handleOtherChange} />
+                                                placeholder="www.onlyfans.com/" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/onlyfans_black.png"
                                                 alt="" />
                                         </label>
                                         <label>
-                                            <input type="text" value={postData?.other_info?.manyvids_link}
+                                            <input type="text" value={postData?.manyvids_link}
                                                 name="manyvids_link" data-static
-                                                placeholder="www.manyvids.com/" onChange={handleOtherChange} />
+                                                placeholder="www.manyvids.com/" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/manyvids_sq.png"
                                                 alt="" />
                                         </label>
                                         <label>
-                                            <input type="text" value={postData?.other_info?.fancentro_link}
+                                            <input type="text" value={postData?.fancentro_link}
                                                 name="fancentro_link" data-static
-                                                placeholder="www.fancentro.com/" onChange={handleOtherChange} />
+                                                placeholder="www.fancentro.com/" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/fc_sq.png"
                                                 alt="" />
                                         </label>
@@ -715,16 +703,16 @@ console.log('payload is ',postData)
                                     <span>I use:</span>
                                     <div className="input-wrap two-columns form-field__group validation flex">
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_social?.includes('twitter')} value="twitter" onChange={handleChangeUsedSocial} />
+                                            <input type="checkbox" checked={postData?.used_social?.includes('twitter')} value="twitter" onChange={handleChangeUsedSocial} />
                                             <span>Twitter</span>
                                         </label>
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_social?.includes('snapchat')}
+                                            <input type="checkbox" checked={postData?.used_social?.includes('snapchat')}
                                                 value="snapchat" onChange={handleChangeUsedSocial} />
                                             <span>Snapchat</span>
                                         </label>
                                         <label>
-                                            <input type="checkbox" checked={postData?.other_info?.used_social?.includes('instagram')}
+                                            <input type="checkbox" checked={postData?.used_social?.includes('instagram')}
                                                 value="instagram" onChange={handleChangeUsedSocial} />
                                             <span>Instagram</span>
                                         </label>
@@ -737,35 +725,34 @@ console.log('payload is ',postData)
                                 <div className="form-field__fieldset">
                                     <div className="link-input__wrapper">
                                         <label>
-                                            <input type="text" value={postData?.other_info?.twitter_link_2}
-                                                name="twitter_link_2" data-static placeholder="www.twitter.com/" onChange={handleOtherChange} />
+                                            <input type="text" value={postData?.twitter_link_2}
+                                                name="twitter_link" data-static placeholder="www.twitter.com/" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/twitter_black.png"
                                                 alt="" />
                                         </label>
                                         <label>
-                                            <input type="text" value={postData?.other_info?.snapchat_link} name="snapchat_link"
-                                                placeholder="username" onChange={handleOtherChange} />
+                                            <input type="text" value={postData?.snapchat_link_2} name="snapchat_link"
+                                                placeholder="username" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/snapchat_black.png"
                                                 alt="" />
                                         </label>
                                         <label>
-                                            <input type="text" value={postData?.other_info?.instagram_link_2}
-                                                name="instagram_link_2" data-static
-                                                placeholder="www.instagram.com/" onChange={handleOtherChange} />
+                                            <input type="text" value={postData?.instagram_link_2}
+                                                name="instagram_link" data-static
+                                                placeholder="www.instagram.com/" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/instagram_black.png"
                                                 alt="" />
                                         </label>
                                         <label>
-                                            <input type="text" value={postData?.other_info?.tiktok_link}
-                                                name="tiktok_link" data-static placeholder="www.tiktok.com/@" onChange={handleOtherChange} />
+                                            <input type="text" value={postData?.tiktok_link_2}
+                                                name="tiktok_link" data-static placeholder="www.tiktok.com/@" onChange={handleChange} />
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/tiktok.png"
                                                 alt="" />
                                         </label>
                                     </div>
                                     <div className="whatsup-input">
                                         <label>
-                                            <input checked={postData?.other_info?.allow_whatsapp_contact} onChange={handleOtherChange
-                                            } type="checkbox" name="allow_whatsapp_contact" />
+                                            <input checked={postData?.allow_whatsapp_contact} type="checkbox" name="allow_whatsapp_contact" />
                                             <span>Yes, allow users to contact me on whatsapp</span>
                                             <img src="//transbunnies.com/wp-content/themes/transbunnies/img/whatsup_black.png"
                                                 alt="" />

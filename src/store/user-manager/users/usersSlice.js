@@ -24,6 +24,7 @@ export const updateUserDetails = (payload) => async (dispatch) => {
 		.updateDetails(payload)
 		.then( (res) => {
             console.log('on submit res',res)
+            window.location.reload()
             // dispatch(userDetailsSuccess(res?.data));
             // return dispatch(setUserDetailsProcessing(false));
 			
