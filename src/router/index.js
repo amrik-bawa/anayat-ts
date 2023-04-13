@@ -15,6 +15,7 @@ import Customers from '../page/user-manager/customers';
 import Administrators from '../page/user-manager/administrators';
 import UserManager from '../page/user-manager';
 import LiveAdverts from '../page/advert-manager/live-adverts';
+import LiveAdvertsAddNew from '../page/advert-manager/live-adverts/LiveAdvertsAddNew';
 import Locations from '../page/advert-manager/locations';
 import Test2 from '../page/common/Test2'
 import Test3 from '../page/common/Test3'
@@ -26,6 +27,10 @@ import EditPaidAds from '../page/user-manager/users/EditPaidAds';
 import EditMedia from '../page/user-manager/users/EditMedia';
 import EditUserLayout from '../page/user-manager/users/EditUserLayout';
 import ErrorPage from '../page/ErrorPage';
+import TestCropper from '../page/components/TestCropper';
+// import ImageCropper from '../page/components/ImageCropper';
+// import ImageCropper2 from '../page/components/ImageCropper2';
+// import ImageUpload from '../page/components/imageCropper/example';
 
 // const isLoggedIn=()=>{
 //     if(localStorage.getItem('token')===null){
@@ -43,6 +48,7 @@ const AuthRoutes = () => {
         element: (isLoggedIn!==null) ? <Layout /> : <Navigate to="/login" />,
         children: [
             { index: true, element: <Home /> },
+            
             { path: 'dashboard', element: <Home /> },
             {path:'/ts-fans', element: <CommingSoon/>},
             {path:'/orders', element: <CommingSoon/>},
@@ -51,7 +57,9 @@ const AuthRoutes = () => {
             children:[
                 { index:true, element: <LiveAdverts/> },
                 { path: 'live-adverts', element: <LiveAdverts/> },
+                { path: 'live-adverts/add-new', element: <LiveAdvertsAddNew/> },
                 { path: 'advert-locations', element: <Locations/> },
+                
                 ] },
             { path: 'user-manager', element: <UserManager/>,
             children:[
@@ -70,8 +78,8 @@ const AuthRoutes = () => {
         }
           ],
     },
-    
     {path:'/ts-fans', element: <CommingSoon/>},
+    {path:'/image-tester', element: <TestCropper/>},
     
     {path:'/test', element: <Test2/>},
     {path:'/test3', element: <Test3/>}

@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
 import {DiscProgress,NoRecordsFound} from "../../common/ResponseDisplay";
 import Pagination from "react-js-pagination";
+import { NavLink } from "react-router-dom";
 
 const LiveAdverts=()=>{
 
@@ -27,6 +28,7 @@ const LiveAdverts=()=>{
                  </div>
              </div>
              <div>
+				<NavLink to='/advert-manager/live-adverts/add-new'><button>Add New</button></NavLink>
                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http:www.w3.org/2000/svg">
                      <path d="M10.0001 10.8333C10.4603 10.8333 10.8334 10.4602 10.8334 9.99998C10.8334 9.53974 10.4603 9.16665 10.0001 9.16665C9.53984 9.16665 9.16675 9.53974 9.16675 9.99998C9.16675 10.4602 9.53984 10.8333 10.0001 10.8333Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
                      <path d="M10.0001 4.99998C10.4603 4.99998 10.8334 4.62688 10.8334 4.16665C10.8334 3.70641 10.4603 3.33331 10.0001 3.33331C9.53984 3.33331 9.16675 3.70641 9.16675 4.16665C9.16675 4.62688 9.53984 4.99998 10.0001 4.99998Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>

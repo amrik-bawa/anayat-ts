@@ -2,13 +2,14 @@ import axios from "axios"
 import { useState } from "react"
 import HeadingA from "../../common/HeadingA"
 import { useDispatch } from "react-redux"
-import { updateAdvertsLocations } from "../../../store/adverts/advertsSlice"
+import { getAdvertsLocations, updateAdvertsLocations } from "../../../store/adverts/advertsSlice"
 
 const EditTsOfTheWeek=({details})=> {
  const dispatch= useDispatch();
 console.log('details',details)
         const [postData,setPostData]=useState(details)
         const [selectedFileD,setSelectedFileD]=useState(null)
+        const [selectedFileM,setSelectedFileM]=useState(null)
 
 
 
@@ -39,26 +40,26 @@ console.log('details',details)
   const handleSubmit = event => {
     event.preventDefault();
     const myFormData = new FormData(event.target);
-
-    const formDataObj = {};
-    myFormData.forEach((value, key) => (formDataObj[key] = value));
-    console.log(formDataObj);
     myFormData.append('product_id',details?.product_id)
-    myFormData.append('title',details?.title)
-    myFormData.append('package_desc',details?.package_desc)
-
     //--attach files
     if(selectedFileD){
       myFormData.append('placeholder_desktop',selectedFileD)
     }
+    if(selectedFileM){
+      myFormData.append('placeholder_mobile',selectedFileM)
+    }
 
-    console.log('payload is ',myFormData)
 
     dispatch(updateAdvertsLocations(myFormData,{
       headers: {
         'content-type': 'multipart/form-data'
-        }})).then((ress)=>{
-      console.log('aaaaaaa', ress)
+        }})).then((res)=>{
+          if(res?.status==200){
+            dispatch(getAdvertsLocations())
+          }
+      console.log('aaaaaaa', res)
+    }).catch((error)=>{
+      console.log('submit error',error)
     })
   }
 
@@ -68,7 +69,9 @@ console.log('details',details)
   const handleFileChangeD=(e)=>{
     setSelectedFileD(e.target.files[0])
   }
-console.log('selected file ',selectedFileD);
+  const handleFileChangeM=(e)=>{
+    setSelectedFileM(e.target.files[0])
+  }
   return (
     <div>
       <form action="" id="login" method="post" onSubmit={handleSubmit}>
@@ -118,9 +121,9 @@ console.log('selected file ',selectedFileD);
           {(()=>{
             console.log('url is ',postData?.placeholders?.desktop?.url)
             if(postData?.placeholders?.desktop?.url){
-              return <img style={{width:'150px',height:'auto'}} src={postData?.placeholders?.desktop?.url}/>
+              return <img style={{width:'150px',height:'auto',maxHeight:'150px'}} src={postData?.placeholders?.desktop?.url}/>
             }else{
-             return <img style={{width:'150px',height:'auto'}} src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'/>
+             return <img style={{width:'150px',height:'auto',maxHeight:'150px'}} src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'/>
             }
           })()}
           <input type='file' onChange={handleFileChangeD} />
@@ -130,11 +133,12 @@ console.log('selected file ',selectedFileD);
           <div>{(()=>{
             console.log('url is ',postData?.placeholders?.mobile?.url)
             if(postData?.placeholders?.mobile?.url){
-              return <img style={{width:'150px',height:'auto'}} src={postData?.placeholders?.mobile?.url}/>
+              return <img style={{width:'150px',height:'auto',maxHeight:'150px'}} src={postData?.placeholders?.mobile?.url}/>
             }else{
-             return <img style={{width:'150px',height:'auto'}} src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'/>
+             return <img style={{width:'150px',height:'auto',maxHeight:'150px'}} src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'/>
             }
           })()}</div>
+          <input type='file' onChange={handleFileChangeM} />
         </p>
         <p className="item">
           <input type="submit" value="Submit" />
